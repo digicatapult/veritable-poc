@@ -1,0 +1,84 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "plugin:promise/recommended",
+    "plugin:react/recommended",
+    "react-app",
+    "react-app/jest",
+    "standard"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "arrowFunctions": true,
+      "binaryLiterals": true,
+      "blockBindings": true,
+      "classes": true,
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "promise",
+    "react"
+  ],
+  "rules": {
+    "array-bracket-spacing": [
+      "error",
+      "always"
+    ],
+    "arrow-spacing": "off",
+    "camelcase": "off",
+    "eol-last": "off",
+    "indent": [
+      1,
+      "tab",
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "key-spacing": [
+      "off",
+      {
+        "align": "value"
+      }
+    ],
+    "keyword-spacing": [
+      "off",
+      {
+        "before": false,
+        "after": false
+      }
+    ],
+    "no-tabs": [
+      "error",
+      {
+        "allowIndentationTabs": true
+      }
+    ],
+    "no-multi-spaces": [
+      "off",
+      {
+        "exceptions": {
+          "VariableDeclarator": true,
+          "BinaryExpression": true
+        }
+      }
+    ],
+    "object-curly-spacing": "off",
+    "prefer-regex-literals": "off",
+    "promise/param-names": "off",
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "space-before-function-paren": "off",
+    "space-infix-ops": "off",
+    "space-in-parens": "off"
+  }
+}

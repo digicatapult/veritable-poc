@@ -1,0 +1,13 @@
+# Git ignore file ( see help.github.com/articles/ignoring-files/ ).
+
+# ReactDependencies
+fly2plan-react-gui/node_modules
+
+# ReactTesting
+fly2plan-react-gui/coverage
+
+# ReactProduction
+fly2plan-react-gui/build
+
+# Tests agent standalone script
+tests-agent/node_modules

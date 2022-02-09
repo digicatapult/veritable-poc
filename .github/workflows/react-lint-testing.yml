@@ -1,0 +1,52 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: TestLinting
+
+
+on:
+  push:
+    branches: '**'
+  pull_request:
+    branches: '**'
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Scheduled test'
+        type: boolean
+
+
+# defaults:
+#   run:
+#     working-directory: fly2plan-react-gui
+
+
+jobs:
+  test:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set Node.js 14.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14.x
+
+    - name: Install dependencies
+      working-directory: ./fly2plan-react-gui
+      run: |
+        npm install
+
+    - name: Run lint
+      working-directory: ./fly2plan-react-gui
+      run: |
+        npm run lint
+
+    - name: Print tag if present
+      run: |
+        echo "Tags: $TAGS"
+      env:
+        TAGS: ${{ github.event.inputs.tags }}
