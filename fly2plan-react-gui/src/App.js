@@ -6,14 +6,14 @@ import AppThemeSelector from './components/Themes/AppThemeSelector'
 import AppCore from './components/Core/AppCore'
 
 function App() {
-	const hash = document.location.hash.replace('#', '')
-	const agentIndex = hash === '' ? '1' : hash
+  const hash = document.location.hash.replace('#', '')
+  const agentIndex = hash === '' ? '1' : hash
 
-	return (
-		<AppThemeSelector agent={agentIndex}>
-			<AppCore agent={agentIndex} />
-		</AppThemeSelector>
-	)
+  return (
+    <AppThemeSelector agent={agentIndex}>
+      <AppCore agent={agentIndex} />
+    </AppThemeSelector>
+  )
 }
 
 export default App

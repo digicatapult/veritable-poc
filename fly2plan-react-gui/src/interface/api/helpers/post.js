@@ -10,29 +10,34 @@
  * @param transformData - a function that takes the data from the server and transforms it.
  */
 export default async function post(
-	origin, path, params,
-	body, setStatus, setError,
-	setStoreData, transformData
+  origin,
+  path,
+  params,
+  body,
+  setStatus,
+  setError,
+  setStoreData,
+  transformData
 ) {
-	params = new URLSearchParams(params).toString()
-	const url = origin + path + '?' + params
-	body = JSON.stringify(body)
-	const method = 'POST'
-	const headers = {'Content-Type': 'application/json'}
-	try {
-		setStatus('fetching')
-		const res = await fetch(url, {body, method, headers})
-		if (res.ok) {
-			const data = await res.json()
-			await new Promise((res, rej) => setTimeout(res, 1000))
-			setStoreData(transformData(data))
-			setStatus('fetched')
-		} else if (!res.ok) {
-			setError(`${res.status}:${res.statusText}`)
-			setStatus('error')
-		}
-	} catch (e) {
-		setError(e.message||'Error after fetch data try!')
-		setStatus('error')
-	}
+  params = new URLSearchParams(params).toString()
+  const url = origin + path + '?' + params
+  body = JSON.stringify(body)
+  const method = 'POST'
+  const headers = { 'Content-Type': 'application/json' }
+  try {
+    setStatus('fetching')
+    const res = await fetch(url, { body, method, headers })
+    if (res.ok) {
+      const data = await res.json()
+      await new Promise((res) => setTimeout(res, 1000))
+      setStoreData(transformData(data))
+      setStatus('fetched')
+    } else if (!res.ok) {
+      setError(`${res.status}:${res.statusText}`)
+      setStatus('error')
+    }
+  } catch (e) {
+    setError(e.message || 'Error after fetch data try!')
+    setStatus('error')
+  }
 }
