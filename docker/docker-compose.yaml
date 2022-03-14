@@ -1,0 +1,118 @@
+version: '3'
+
+services:
+  # cloudagent-db:
+  #   image: postgres:14
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_DB=wallet
+  #   ports:
+  #     - 5432:5432
+  #   networks:
+  #     - von
+  #   volumes:
+  #     - cloudagent-data:/var/lib/postgresql/data
+  veritable-demo-init:
+    build:
+      context: .
+      dockerfile: Dockerfile.init
+    container_name: veritable-demo-init
+    networks:
+      - von
+  cloudagent-issuer:
+    image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
+    container_name: veritable-cloudagent-issuer
+    command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
+    restart: on-failure
+    environment:
+    #   # this should work: https://github.com/bw2/ConfigArgParse/issues/115
+    #   # - ACAPY_INBOUND_TRANSPORT="[\"http\", \"0.0.0.0\", \"8000\"]"
+    #   # - ACAPY_INBOUND_TRANSPORT="[\"ws\", \"0.0.0.0\", \"8001\"]"
+    #   # - ACAPY_ADMIN="[\"0.0.0.0\", \"8031\"]"
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-issuer:8000
+      - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
+      - ACAPY_OUTBOUND_TRANSPORT=http
+      - ACAPY_AUTO_PROVISION=true
+      - ACAPY_WALLET_TYPE=indy
+      - ACAPY_WALLET_NAME=issuer
+      - ACAPY_WALLET_KEY=issuer_password
+      - ACAPY_WALLET_SEED=000000000000000000000000000Node1
+    #   # should work so we can use a postgres backend but errors. Further investigation required
+    #   # - ACAPY_WALLET_STORAGE_TYPE=postgres_storage
+    #   # - ACAPY_WALLET_STORAGE_CONFIG="{\"url\":\"aries-cloudagent-cloudagent-db-1:5432\",\"wallet_scheme\":\"MultiWalletMultiTable\",\"database_name\":\"wallet\"}"
+    #   # - ACAPY_WALLET_STORAGE_CREDS="{\"account\":\"postgres\",\"password\":\"postgres\",\"admin_account\":\"postgres\",\"admin_password\":\"postgres\"}"
+    #   # can be used instead of ACAPY_ADMIN_INSECURE_MODE but then requires a X-API-Key call for all calls
+    #   # - ACAPY_ADMIN_API_KEY=some-api-key
+      - ACAPY_ADMIN_INSECURE_MODE=true
+      - ACAPY_LOG_LEVEL=debug
+    ports:
+      - 8021:8002
+    networks:
+      - von
+  cloudagent-licensee:
+    image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
+    container_name: veritable-cloudagent-licensee
+    command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
+    restart: on-failure
+    environment:
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-licensee:8000
+      - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
+      - ACAPY_OUTBOUND_TRANSPORT=http
+      - ACAPY_AUTO_PROVISION=true
+      - ACAPY_WALLET_TYPE=indy
+      - ACAPY_WALLET_NAME=licensee
+      - ACAPY_WALLET_KEY=licensee_password
+      - ACAPY_ADMIN_INSECURE_MODE=true
+      - ACAPY_LOG_LEVEL=debug
+    ports:
+      - 8031:8002
+    networks:
+      - von
+  cloudagent-verifier:
+    image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
+    container_name: veritable-cloudagent-verifier
+    command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
+    restart: on-failure
+    environment:
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-verifier:8000
+      - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
+      - ACAPY_OUTBOUND_TRANSPORT=http
+      - ACAPY_AUTO_PROVISION=true
+      - ACAPY_WALLET_TYPE=indy
+      - ACAPY_WALLET_NAME=verifier
+      - ACAPY_WALLET_KEY=verifier_password
+      - ACAPY_ADMIN_INSECURE_MODE=true
+      - ACAPY_LOG_LEVEL=debug
+    ports:
+      - 8041:8002
+    networks:
+      - von
+  cloudagent-authority:
+    image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
+    container_name: veritable-cloudagent-authority
+    command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
+    restart: on-failure
+    environment:
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-authority:8000
+      - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
+      - ACAPY_OUTBOUND_TRANSPORT=http
+      - ACAPY_AUTO_PROVISION=true
+      - ACAPY_WALLET_TYPE=indy
+      - ACAPY_WALLET_NAME=authority
+      - ACAPY_WALLET_KEY=authority_password
+      - ACAPY_WALLET_SEED=000000000000000000000000000Node2
+      - ACAPY_ADMIN_INSECURE_MODE=true
+      - ACAPY_LOG_LEVEL=debug
+    ports:
+      - 8051:8002
+    networks:
+      - von
+
+networks:
+  von:
+    external:
+      name: von_von
+
+volumes:
+  cloudagent-data:
