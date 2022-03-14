@@ -1,18 +1,18 @@
-# Fly2Plan Three Agent SSI Demo
+# Veritable Three Agent SSI Demo
 
-This is the first version of the three-agent-based proof of concept SSI system for Fly2Plan.
+This is the first version of the three-agent-based proof of concept SSI system for Veritable.
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: The Larger Context
+## Veritable Three Agent SSI Demo: The Larger Context
 
-Evidently, there's a larger context for this codebase, that we should bear in mind here. This frontend application, together with all the related customised backend elements, has been build as part of _Use Case 4_ ( _UC4_ ) in the Fly2Plan project.
+Evidently, there's a larger context for this codebase, that we should bear in mind here. This frontend application, together with all the related customised backend elements, has been build as part of _Use Case 4_ ( _UC4_ ) in the Veritable project.
 
 A more polished second version, will be made available as a separate open-source repository, in due course.
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: Overview
+## Veritable Three Agent SSI Demo: Overview
 
 From a high-level point of view, this project is simply a _three-agent-based_ Self-Sovereign Identity ( _SSI_ ) proof of concept ( _PoC_ ) system. In this application, each _Agent_ has a distinct role, meaning they cover all the basic agent _types_ that one can observe in virtually every SSI example out there ( e.g. the famous _"Fundamental Building Block of SSI"_ diagram available on **[Wikipedia](https://en.wikipedia.org/wiki/Self-sovereign_identity#/media/File:Decentralized-identifiers-dids-the-fundamental-building-block-of-selfsovereign-identity-ssi-37-1024_DIDs-enable-digitally-signed-verifiable-claims.jpg)** ). That is to say, the _trust-triangle_ presented here, includes the usual _Issuer Agent_, _Holder Agent_ and _Verifier Agent_.
 
@@ -40,7 +40,7 @@ Note: The PoC application shown here, is ideal for demonstration purposes only. 
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: System Setup
+## Veritable Three Agent SSI Demo: System Setup
 
 As stated before, we are dealing with three individual parties in this demo here ( first the _Issuer_, second the _Holder_, and finally the _Verifier_ ). Those parties are differentiated with the help of three different themes, each of them, built with different colour schemes, fonts and logo-type symbols ( e.g.: there is a _green_ colour scheme for _Drone Training_ organisation, a _blue_ colour scheme for the system representing the _Pilot_ and a _purple_ colour scheme for the organisation representing _Heathrow Airside Operations_ ).
 
@@ -54,7 +54,7 @@ The _Decentralized Ledger Tech_ component ( _DLT_ ) behind the scene is built fr
 
 ![explorer-screenshot](readme-assets/readme-asset-explorer-screenshot.png)
 
-As long as the demo runs in a normal operational mode, only transactions showing information about the creation of _credential schemas_ / _credential definition_ will be visible in the ledger. As a side note, the DLT will include a few _NYM_ transactions at the beginning of the ledger, transactions which carry the _NYM_ information of all the major parties involved. All of those will be there as a result of the _Aries Cloudagent Agent_ ( _ACA_ ) python layer booting up. In this case, we are using, a modified ACA called _fly2plan-aries-cloudagent_, detailed below. Everything else, will be _off-chain_.
+As long as the demo runs in a normal operational mode, only transactions showing information about the creation of _credential schemas_ / _credential definition_ will be visible in the ledger. As a side note, the DLT will include a few _NYM_ transactions at the beginning of the ledger, transactions which carry the _NYM_ information of all the major parties involved. All of those will be there as a result of the _Aries Cloudagent Agent_ ( _ACA_ ) python layer booting up. In this case, we are using, a modified ACA called _veritable-aries-cloudagent_, detailed below. Everything else, will be _off-chain_.
 
 The _schema_, together with the _definition_, is one of the foundational cryptographic artifacts of the trusted and interoperable SSI system. This is, essentially, the template which encapsulates all the fields required for a particular credential, with rules about how every field should _look_ like, and what field should be encrypted / not encrypted, and in what way. It contains the following fields:
 
@@ -78,7 +78,7 @@ Note that during the verification step, the peer to peer connection between Cons
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: Software and Libraries Requirements
+## Veritable Three Agent SSI Demo: Software and Libraries Requirements
 
 In terms of software requirements, **Docker** version **20.10.11** or higher would be highly recommended to have ( use `sudo apt-get install docker-ce` or `brew cask install docker` ).
 
@@ -88,13 +88,13 @@ That is needed for the backend, for the frontend, Node is needed, ideally **Node
 
 Before moving to requirements related to the frontend, another extra small dependency is required, called **JQ**, the widely-used command-line JSON parser (used by the Aries Python Cloudagent), ideally **v1.6** or higher ( just use `sudo apt install -y jq` or `brew install jq` to install it ).
 
-All the _npm_ packages will be installed, automatically, when starting the project ( `start.sh` ), if the _node modules_ folder is not present, as in, if this folder can't be found inside _fly2plan-poc-agents_ (if there are any issues running this project, one solution would be to delete this folder and start again) .
+All the _npm_ packages will be installed, automatically, when starting the project ( `start.sh` ), if the _node modules_ folder is not present, as in, if this folder can't be found inside _veritable-poc-agents_ (if there are any issues running this project, one solution would be to delete this folder and start again) .
 
 Just for the record, the following _npm_ packages will be installed ( all other _backend dependencies_ are virtualised ): `testing-library/jest-dom^5.14.1`; `testing-library/react^11.2.7`; `testing-library/user-event^12.8.3`; `react^17.0.2`; `react-dom^17.0.2`; `react-json-view^1.21.3`; `react-scripts4.0.3`.
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: How to Start the Application
+## Veritable Three Agent SSI Demo: How to Start the Application
 
 In order to start the application, simply run the included shell script:
 
@@ -108,7 +108,7 @@ Last, but not least, in case there is a need of a restart, us the restart script
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: Demoing the SSI Concept
+## Veritable Three Agent SSI Demo: Demoing the SSI Concept
 
 This section speaks about how to go about demoing the SSI fundamentals ( _communication_ / _ID creation_ / _ID verification_ ), as in, what is the recommended sequence of commands to follow, when demonstrating this SSI proof of concept to others.
 
@@ -221,15 +221,15 @@ Now, everything is approved and Alice is ready to fly her drone.
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: Details About the Backend
+## Veritable Three Agent SSI Demo: Details About the Backend
 
 The table below, shows all the backend containerised services, assuming the system is running in normal operational mode ( from `docker ps` ).
 
 | # 	| IMAGE             	| PORTS                            	| NAMES           	|
 |---	|-------------------	|----------------------------------	|-----------------	|
-| 1 	| fly2plan-ssi-demo 	| 0.0.0.0:8040-8047->8040-8047/tcp 	| airops          	|
-| 2 	| fly2plan-ssi-demo 	| 0.0.0.0:8030-8037->8030-8037/tcp 	| alice           	|
-| 3 	| fly2plan-ssi-demo 	| 0.0.0.0:8020-8027->8020-8027/tcp 	| consortiq       	|
+| 1 	| veritable-ssi-demo 	| 0.0.0.0:8040-8047->8040-8047/tcp 	| airops          	|
+| 2 	| veritable-ssi-demo 	| 0.0.0.0:8030-8037->8030-8037/tcp 	| alice           	|
+| 3 	| veritable-ssi-demo 	| 0.0.0.0:8020-8027->8020-8027/tcp 	| consortiq       	|
 | 4 	|  von-network-base 	|           0.0.0.0:9000->8000/tcp 	| von_webserver_1 	|
 | 5 	| von-network-base  	| 0.0.0.0:9701-9702->9701-9702/tcp 	| von_node1_1     	|
 | 6 	| von-network-base  	| 0.0.0.0:9703-9704->9703-9704/tcp 	| von_node2_1     	|
@@ -238,7 +238,7 @@ The table below, shows all the backend containerised services, assuming the syst
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: Details About the Frontend
+## Veritable Three Agent SSI Demo: Details About the Frontend
 
 The table below, shows information about the central frontend GUI web service ( it is important to note, here, this service is not containerised ).
 
@@ -248,7 +248,7 @@ The table below, shows information about the central frontend GUI web service ( 
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: Using the Tests Standalone Script
+## Veritable Three Agent SSI Demo: Using the Tests Standalone Script
 
 To use the tests executable that was proved together with this project, change the working folder to the appropriate one (the folder that holds the script that runs all the tests):
 
@@ -270,13 +270,13 @@ If this script runs correctly, in theory the frontend should also run without is
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: Interacting With Directly the ACA Swagger API Layer
+## Veritable Three Agent SSI Demo: Interacting With Directly the ACA Swagger API Layer
 
-For this section, please check the **[README-fly2plan-poc-agents.md](https://gist.github.com/andysign/145188bc361ea9dd7e44db1a5a8a282a)** file.
+For this section, please check the **[README-veritable-poc-agents.md](https://gist.github.com/andysign/145188bc361ea9dd7e44db1a5a8a282a)** file.
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: System Architecture Diagram
+## Veritable Three Agent SSI Demo: System Architecture Diagram
 
 In simple terms, the system architecture diagram looks is the one below.
 
@@ -315,7 +315,7 @@ In simple terms, the system architecture diagram looks is the one below.
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: About Connecting Using Custom Endpoint
+## Veritable Three Agent SSI Demo: About Connecting Using Custom Endpoint
 
 Another aspect. that needs to be highlighted, is the way the frontend is programmed to _communicate_ with the backend, which has a high degree of flexibility.
 
@@ -325,7 +325,7 @@ All you need to do to connect to your custom backend is: when you open the GUI, 
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: About the Theme Selector
+## Veritable Three Agent SSI Demo: About the Theme Selector
 
 To help differentiate the GUIs, every agent view uses a different theme ( different set of colours, fonts and icon styles ).
 
@@ -341,7 +341,7 @@ In that respect, in order to add another theme, like for example, for a forth ag
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: Map of All Frontend React Components
+## Veritable Three Agent SSI Demo: Map of All Frontend React Components
 
 To better understand the structure of the React application you can browse the following three component diagrams.
 
@@ -353,7 +353,7 @@ To better understand the structure of the React application you can browse the f
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: Details About the Folder Structure
+## Veritable Three Agent SSI Demo: Details About the Folder Structure
 
 All the React components / sub-components / and so on, in this project are developed using the _folders-as-components_ methodology ( this methodology of creating components is described in detail here in this **[NodeJsOrg article](https://nodejs.org/dist/latest-v7.x/docs/api/modules.html#modules_folders_as_modules)** ).
 
@@ -363,7 +363,7 @@ It is highly recommended to keep the same method of creating new components, for
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: Limitations and Known Issues
+## Veritable Three Agent SSI Demo: Limitations and Known Issues
 
 The creation of a forth GUI for CAA have been left for future work.
 
@@ -371,7 +371,7 @@ Also, this project's React GUI is not virtualised ( inserted in a in a Docker im
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: Manual Starting the Fly2plan Network of Validators
+## Veritable Three Agent SSI Demo: Manual Starting the Veritable Network of Validators
 
 Steps required to run the underlying ( Indy-based ) VON Network:
 
@@ -383,17 +383,17 @@ This git submodule is configured to just point to the official repository:
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: Manual Starting the Fly2plan PoC Agents
+## Veritable Three Agent SSI Demo: Manual Starting the Veritable PoC Agents
 
 The steps required to run the three underlying agents are described in the official ACP repository:
 
-See **[fly2plan-aries-cloudagent](fly2plan-aries-cloudagent)** / **[README.md](fly2plan-aries-cloudagent/README.md)** or use the runner executable provided here **[fly2plan-aries-cloudagent](fly2plan-aries-cloudagent)** / **[demo](fly2plan-aries-cloudagent/demo)** / **[run_demo](fly2plan-aries-cloudagent/demo/run_demo)** .
+See **[veritable-aries-cloudagent](veritable-aries-cloudagent)** / **[README.md](veritable-aries-cloudagent/README.md)** or use the runner executable provided here **[veritable-aries-cloudagent](veritable-aries-cloudagent)** / **[demo](veritable-aries-cloudagent/demo)** / **[run_demo](veritable-aries-cloudagent/demo/run_demo)** .
 
 This program is designed to run in foreground or in background depending on the command. To run all three agents in the background, one can use a command that looks similar to the following: `./run_demo consortiq --bg`, `./run_demo alice --bg` and `./run_demo airops --bg`.
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: Limitations and Known Issues
+## Veritable Three Agent SSI Demo: Limitations and Known Issues
 
 The creation of a forth GUI for CAA have been left for future work.
 
@@ -401,7 +401,7 @@ Also, this project's React GUI is not virtualised ( inserted in a in a Docker im
 
 ---
 
-## Fly2Plan Three Agent SSI Demo: License
+## Veritable Three Agent SSI Demo: License
 
 When it comes to the topic of license, please refer the `LICENSE` file placed in this project here, for all the related info.
 

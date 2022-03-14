@@ -18,7 +18,7 @@ on:
 
 # defaults:
 #   run:
-#     working-directory: fly2plan-react-gui
+#     working-directory: veritable-react-gui
 
 
 jobs:
@@ -36,12 +36,12 @@ jobs:
         node-version: 14.x
 
     - name: Install dependencies
-      working-directory: ./fly2plan-react-gui
+      working-directory: ./veritable-react-gui
       run: |
         npm install
 
     - name: Run lint
-      working-directory: ./fly2plan-react-gui
+      working-directory: ./veritable-react-gui
       run: |
         npm run lint
 

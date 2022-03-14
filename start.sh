@@ -11,7 +11,7 @@ cd ../
 echo -en "\n\nWaitingForVonWebserver"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:9000/genesis 2>&1); echo -n .; done
 
 # START F2P ARIES CLOUD AGENT
-cd fly2plan-aries-cloudagent/demo/
+cd veritable-aries-cloudagent/demo/
 nohup ./run_demo consortiq --bg > /dev/null 2> /dev/null &
 echo -en "\n\nWaitingForConsortiq"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:8021/status 2>&1); echo -n .; done
 nohup ./run_demo alice --bg > /dev/null 2> /dev/null &
@@ -22,7 +22,7 @@ cd ../../
 echo -e "\n\nDONE"
 
 # START REACT
-cd fly2plan-react-gui/
+cd veritable-react-gui/
 [ ! -d "./node_modules/" ] && npm install
 nohup npm start > /tmp/react.log 2> /tmp/react.log &
 echo -en "\n\nWaitingForReactJsGui"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:3000 2>&1); echo -n .; done

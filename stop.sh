@@ -1,4 +1,4 @@
-cd fly2plan-aries-cloudagent/demo/
+cd veritable-aries-cloudagent/demo/
 docker stop consortiq alice airops ; docker rm -f consortiq alice airops
 sleep 1
 cd ../../

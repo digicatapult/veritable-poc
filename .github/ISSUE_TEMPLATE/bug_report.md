@@ -5,15 +5,15 @@ about: Create a report to help us improve
 
 <!--
 
-Have you read {project_name}'s Code of Conduct? By filing an Issue, you are expected to comply with it, including treating everyone with respect: https://github.com/digicatapult/fly2plan-poc/.github/blob/main/CODE_OF_CONDUCT.md
+Have you read {project_name}'s Code of Conduct? By filing an Issue, you are expected to comply with it, including treating everyone with respect: https://github.com/digicatapult/veritable-poc/.github/blob/main/CODE_OF_CONDUCT.md
 
 -->
 
 ### Prerequisites
 
 - [ ] Put an X between the brackets on this line if you have done all of the following:
-  - Checked the FAQs for common solutions: <https://github.com/digicatapult/fly2plan-poc/blob/main/CONTRIBUTING.md/#FAQs>
-  - Checked that your issue isn't already filed: <https://github.com/issues?utf8=✓&q=is%3Aissue+user%3Afly2plan-poc>
+  - Checked the FAQs for common solutions: <https://github.com/digicatapult/veritable-poc/blob/main/CONTRIBUTING.md/#FAQs>
+  - Checked that your issue isn't already filed: <https://github.com/issues?utf8=✓&q=is%3Aissue+user%3Averitable-poc>
 
 ### Description
 
