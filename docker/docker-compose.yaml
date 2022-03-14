@@ -1,18 +1,6 @@
 version: '3'
 
 services:
-  # cloudagent-db:
-  #   image: postgres:14
-  #   environment:
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=postgres
-  #     - POSTGRES_DB=wallet
-  #   ports:
-  #     - 5432:5432
-  #   networks:
-  #     - von
-  #   volumes:
-  #     - cloudagent-data:/var/lib/postgresql/data
   veritable-demo-init:
     build:
       context: .
@@ -26,10 +14,6 @@ services:
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
     restart: on-failure
     environment:
-    #   # this should work: https://github.com/bw2/ConfigArgParse/issues/115
-    #   # - ACAPY_INBOUND_TRANSPORT="[\"http\", \"0.0.0.0\", \"8000\"]"
-    #   # - ACAPY_INBOUND_TRANSPORT="[\"ws\", \"0.0.0.0\", \"8001\"]"
-    #   # - ACAPY_ADMIN="[\"0.0.0.0\", \"8031\"]"
       - ACAPY_ENDPOINT=http://veritable-cloudagent-issuer:8000
       - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
       - ACAPY_OUTBOUND_TRANSPORT=http
@@ -38,12 +22,6 @@ services:
       - ACAPY_WALLET_NAME=issuer
       - ACAPY_WALLET_KEY=issuer_password
       - ACAPY_WALLET_SEED=000000000000000000000000000Node1
-    #   # should work so we can use a postgres backend but errors. Further investigation required
-    #   # - ACAPY_WALLET_STORAGE_TYPE=postgres_storage
-    #   # - ACAPY_WALLET_STORAGE_CONFIG="{\"url\":\"aries-cloudagent-cloudagent-db-1:5432\",\"wallet_scheme\":\"MultiWalletMultiTable\",\"database_name\":\"wallet\"}"
-    #   # - ACAPY_WALLET_STORAGE_CREDS="{\"account\":\"postgres\",\"password\":\"postgres\",\"admin_account\":\"postgres\",\"admin_password\":\"postgres\"}"
-    #   # can be used instead of ACAPY_ADMIN_INSECURE_MODE but then requires a X-API-Key call for all calls
-    #   # - ACAPY_ADMIN_API_KEY=some-api-key
       - ACAPY_ADMIN_INSECURE_MODE=true
       - ACAPY_LOG_LEVEL=debug
     ports:
