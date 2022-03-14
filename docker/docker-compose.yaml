@@ -25,6 +25,16 @@ services:
       - ACAPY_WALLET_SEED=000000000000000000000000000Node1
       - ACAPY_ADMIN_INSECURE_MODE=true
       - ACAPY_LOG_LEVEL=debug
+      - ACAPY_AUTO_PING_CONNECTION=true
+      - ACAPY_AUTO_RESPOND_MESSAGES=true
+      - ACAPY_DEBUG_CONNECTIONS=true
+      - ACAPY_TRACE_TARGET=log
+      - ACAPY_TRACE_TAG=acapy.events
+      - ACAPY_TRACE_LABEL=issuer.agent.trace
+      - ACAPY_AUTO_ACCEPT_INVITES=true
+      - ACAPY_AUTO_ACCEPT_REQUESTS=true
+      - ACAPY_AUTO_STORE_CREDENTIAL=true
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=true
     ports:
       - 8021:8002
     networks:
@@ -45,6 +55,19 @@ services:
       - ACAPY_WALLET_KEY=licensee_password
       - ACAPY_ADMIN_INSECURE_MODE=true
       - ACAPY_LOG_LEVEL=debug
+      - ACAPY_AUTO_PING_CONNECTION=true
+      - ACAPY_AUTO_RESPOND_MESSAGES=true
+      - ACAPY_DEBUG_CONNECTIONS=true
+      - ACAPY_TRACE_TARGET=log
+      - ACAPY_TRACE_TAG=acapy.events
+      - ACAPY_TRACE_LABEL=issuer.agent.trace
+      - ACAPY_AUTO_ACCEPT_INVITES=true
+      - ACAPY_AUTO_ACCEPT_REQUESTS=true
+      - ACAPY_AUTO_STORE_CREDENTIAL=true
+      - ACAPY_PRESERVE_EXCHANGE_RECORDS=true
+      - ACAPY_EMIT_NEW_DIDCOMM_PREFIX=true
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_OFFER=true
+      - ACAPY_AUTO_RESPOND_PRESENTATION_REQUEST=true
     ports:
       - 8031:8002
     networks:
@@ -65,6 +88,16 @@ services:
       - ACAPY_WALLET_KEY=verifier_password
       - ACAPY_ADMIN_INSECURE_MODE=true
       - ACAPY_LOG_LEVEL=debug
+      - ACAPY_AUTO_PING_CONNECTION=true
+      - ACAPY_AUTO_RESPOND_MESSAGES=true
+      - ACAPY_DEBUG_CONNECTIONS=true
+      - ACAPY_TRACE_TARGET=log
+      - ACAPY_TRACE_TAG=acapy.events
+      - ACAPY_TRACE_LABEL=verifier.agent.trace
+      - ACAPY_AUTO_ACCEPT_INVITES=true
+      - ACAPY_AUTO_ACCEPT_REQUESTS=true
+      - ACAPY_AUTO_STORE_CREDENTIAL=true
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=true
     ports:
       - 8041:8002
     networks:
@@ -86,6 +119,16 @@ services:
       - ACAPY_WALLET_SEED=000000000000000000000000000Node2
       - ACAPY_ADMIN_INSECURE_MODE=true
       - ACAPY_LOG_LEVEL=debug
+      - ACAPY_AUTO_PING_CONNECTION=true
+      - ACAPY_AUTO_RESPOND_MESSAGES=true
+      - ACAPY_DEBUG_CONNECTIONS=true
+      - ACAPY_TRACE_TARGET=log
+      - ACAPY_TRACE_TAG=acapy.events
+      - ACAPY_TRACE_LABEL=authority.agent.trace
+      - ACAPY_AUTO_ACCEPT_INVITES=true
+      - ACAPY_AUTO_ACCEPT_REQUESTS=true
+      - ACAPY_AUTO_STORE_CREDENTIAL=true
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=true
     ports:
       - 8051:8002
     networks:
