@@ -42,14 +42,24 @@ export default function CredentialSetItem({
       <div className="card-body">
         <p className="card-text mt-2 small">
           Timestamp:&nbsp;
-          <a href="#/" title={timestamp} className="text-primary">
+          <a
+            href="/#"
+            onClick={(e) => e.preventDefault()}
+            title={timestamp}
+            className="text-primary"
+          >
             {new Date(timestamp * 1000)
               .toISOString()
               .slice(0, 19)
               .replace('T', ' ')}
           </a>
           &nbsp;|&nbsp; DefId:&nbsp;
-          <a href="#/" title={cred_def_id} className="text-primary">
+          <a
+            href="/#"
+            onClick={(e) => e.preventDefault()}
+            title={cred_def_id}
+            className="text-primary"
+          >
             {cred_def_id.slice(0, 2)}…:{cred_def_id.split(':')[4]}
           </a>
         </p>
