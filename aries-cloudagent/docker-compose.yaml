@@ -1,0 +1,108 @@
+version: '3'
+
+# cloud-agent-alice --network von_von bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3 start -e http://cloud-agent-alice --genesis-url http://von-webserver-1:8000/genesis --inbound-transport http 0.0.0.0 8000 --outbound-transport http
+
+# bring up trustee, consortiq, caa, airops and a pilot multiwallet
+# trustee is the only instance with a pre-assigned seed
+# for { consortiq, caa } as agent
+#   from agent create a local did `POST /wallet/did/create`
+#   from the response get the DID and VerKey
+#   from trustee register nym `POST /ledger/register-nym`
+#   from agent assign public DID `POST ​/wallet​/did​/public`
+# for { airopps } as agent
+#   from agent create a local did `POST /wallet/did/create`
+#
+
+services:
+  # cloudagent-db:
+  #   image: postgres:14
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_DB=wallet
+  #   ports:
+  #     - 5432:5432
+  #   networks:
+  #     - von
+  #   volumes:
+  #     - cloudagent-data:/var/lib/postgresql/data
+  cloudagent-trustee:
+    image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
+    container_name: veritable-cloudagent-trustee
+    command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
+    restart: on-failure
+    environment:
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-trustee:8000
+      - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
+      # this should work: https://github.com/bw2/ConfigArgParse/issues/115
+      # - ACAPY_INBOUND_TRANSPORT="[\"http\", \"0.0.0.0\", \"8000\"]"
+      # - ACAPY_INBOUND_TRANSPORT="[\"ws\", \"0.0.0.0\", \"8001\"]"
+      # - ACAPY_ADMIN="[\"0.0.0.0\", \"8031\"]"
+      - ACAPY_OUTBOUND_TRANSPORT=http
+      - ACAPY_AUTO_PROVISION=true
+      - ACAPY_WALLET_TYPE=indy
+      - ACAPY_WALLET_SEED=000000000000000000000000Trustee1
+      - ACAPY_WALLET_NAME=trustee
+      - ACAPY_WALLET_KEY=trustee_password
+      # should work so we can use a postgres backend but errors. Further investigation required
+      # - ACAPY_WALLET_STORAGE_TYPE=postgres_storage
+      # - ACAPY_WALLET_STORAGE_CONFIG="{\"url\":\"aries-cloudagent-cloudagent-db-1:5432\",\"wallet_scheme\":\"MultiWalletMultiTable\",\"database_name\":\"wallet\"}"
+      # - ACAPY_WALLET_STORAGE_CREDS="{\"account\":\"postgres\",\"password\":\"postgres\",\"admin_account\":\"postgres\",\"admin_password\":\"postgres\"}"
+      # can be used instead of ACAPY_ADMIN_INSECURE_MODE but then requires a X-API-Key call for all calls
+      # - ACAPY_ADMIN_API_KEY=some-api-key
+      - ACAPY_ADMIN_INSECURE_MODE=true
+    ports:
+      - 8011:8000
+      - 8012:8001
+      - 8013:8002
+    networks:
+      - von
+  cloudagent-consortiq:
+    image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
+    container_name: veritable-cloudagent-consortiq
+    command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
+    restart: on-failure
+    environment:
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-consortiq:8000
+      - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
+      - ACAPY_OUTBOUND_TRANSPORT=http
+      - ACAPY_AUTO_PROVISION=true
+      - ACAPY_WALLET_TYPE=indy
+      - ACAPY_WALLET_NAME=consortiq
+      - ACAPY_WALLET_KEY=consortiq_password
+      - ACAPY_ADMIN_INSECURE_MODE=true
+      - ACAPY_LOG_LEVEL=debug
+    ports:
+      - 8021:8000
+      - 8022:8001
+      - 8023:8002
+    networks:
+      - von
+  cloudagent-licencees:
+    image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
+    container_name: veritable-cloudagent-licencees
+    command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
+    restart: on-failure
+    environment:
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-licencees:8000
+      - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
+      - ACAPY_OUTBOUND_TRANSPORT=http
+      - ACAPY_MULTITENANT=true
+      - ACAPY_MULTITENANT_JWT_SECRET=super-secret
+      - ACAPY_MULTITENANT_ADMIN=true
+      - ACAPY_ADMIN_INSECURE_MODE=true
+      - ACAPY_LOG_LEVEL=debug
+    ports:
+      - 8031:8000
+      - 8032:8001
+      - 8033:8002
+    networks:
+      - von
+
+networks:
+  von:
+    external:
+      name: von_von
+
+volumes:
+  cloudagent-data:
