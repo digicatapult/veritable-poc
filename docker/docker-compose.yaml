@@ -15,7 +15,7 @@ services:
     restart: on-failure
     environment:
       - ACAPY_ENDPOINT=http://veritable-cloudagent-issuer:8000
-      - ACAPY_LABEL=issuer
+      - ACAPY_LABEL=issuer.agent
       - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
       - ACAPY_OUTBOUND_TRANSPORT=http
       - ACAPY_AUTO_PROVISION=true
@@ -46,7 +46,7 @@ services:
     restart: on-failure
     environment:
       - ACAPY_ENDPOINT=http://veritable-cloudagent-licensee:8000
-      - ACAPY_LABEL=licensee
+      - ACAPY_LABEL=licensee.agent
       - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
       - ACAPY_OUTBOUND_TRANSPORT=http
       - ACAPY_AUTO_PROVISION=true
@@ -79,7 +79,7 @@ services:
     restart: on-failure
     environment:
       - ACAPY_ENDPOINT=http://veritable-cloudagent-verifier:8000
-      - ACAPY_LABEL=verifier
+      - ACAPY_LABEL=verifier.agent
       - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
       - ACAPY_OUTBOUND_TRANSPORT=http
       - ACAPY_AUTO_PROVISION=true
@@ -109,7 +109,7 @@ services:
     restart: on-failure
     environment:
       - ACAPY_ENDPOINT=http://veritable-cloudagent-authority:8000
-      - ACAPY_LABEL=authority
+      - ACAPY_LABEL=authority.agent
       - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
       - ACAPY_OUTBOUND_TRANSPORT=http
       - ACAPY_AUTO_PROVISION=true

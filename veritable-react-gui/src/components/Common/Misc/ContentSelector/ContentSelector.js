@@ -10,11 +10,11 @@ import ContentWrap03 from '../../../AgentVerifier/ContentWrap'
 export default function ContentSelector({ children, status, origin, persona }) {
   const personaSwitcher = (personaLabelFromBackend) => {
     switch (personaLabelFromBackend.replace('.agent', '')) {
-      case 'consortiq':
+      case 'issuer':
         return 1
-      case 'alice':
+      case 'licensee':
         return 2
-      case 'airops':
+      case 'verifier':
         return 3
       default:
         return 1
