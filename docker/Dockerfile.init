@@ -15,14 +15,13 @@ ledger custom {"reqId":1646776289419356201,"identifier":"V4SGRU86Z58d6TV7PBUe6f"
 exit
 EOF
 
-COPY --chown=indy:indy <<EOF /home/indy/run.sh
+COPY --chown=indy:indy --chmod=744 <<EOF /home/indy/run.sh
 #!/bin/bash
 set -ex
 
 curl http://\${VON_NETWORK_WEB_HOST}:8000/genesis -o /home/indy/pool_transactions_genesis
 indy-cli /home/indy/init.txt
 EOF
-RUN chmod +x /home/indy/run.sh
 
 ENV VON_NETWORK_WEB_HOST=von-webserver-1
 
