@@ -11,7 +11,6 @@ import useGetLoopedConn from '../../../../../interface/hooks/use-get-looped-conn
 import usePostConnCreateInvitation from '../../../../../interface/hooks/use-post-conn-create-invitation'
 import usePostConnReceiveInvitation from '../../../../../interface/hooks/use-post-conn-receive-invitation'
 import useDeleteConnections from '../../../../../interface/hooks/use-delete-connections'
-// import useGetConn from '../../../../../interface/hooks/use-get-conn'
 
 export default function ConnectivityWrap({
   children,
