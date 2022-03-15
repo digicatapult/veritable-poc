@@ -37,7 +37,7 @@ export default function ColumnRightWrap({ origin }) {
                 )}
 
                 {dataRecords.map((r, i) => (
-                  <div key={i} className="card">
+                  <div key={r.cred_ex_record.cred_ex_id} className="card">
                     <IssuedRecordItem record={r} index={i} />
                   </div>
                 ))}

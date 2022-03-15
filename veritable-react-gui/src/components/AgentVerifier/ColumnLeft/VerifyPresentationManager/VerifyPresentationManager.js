@@ -37,8 +37,8 @@ export default function VerifyPresentationManager({
               <option value={''} disabled>
                 - Select -
               </option>
-              {dataPresExIds.map((e, i) => (
-                <option value={e} key={i}>
+              {dataPresExIds.map((e) => (
+                <option value={e} key={e}>
                   {e}
                 </option>
               ))}
