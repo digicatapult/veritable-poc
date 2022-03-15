@@ -11,6 +11,7 @@ import useGetLoopedConn from '../../../../../interface/hooks/use-get-looped-conn
 import usePostConnCreateInvitation from '../../../../../interface/hooks/use-post-conn-create-invitation'
 import usePostConnReceiveInvitation from '../../../../../interface/hooks/use-post-conn-receive-invitation'
 import useDeleteConnections from '../../../../../interface/hooks/use-delete-connections'
+// import useGetConn from '../../../../../interface/hooks/use-get-conn'
 
 export default function ConnectivityWrap({
   children,
@@ -21,6 +22,8 @@ export default function ConnectivityWrap({
   const personaPrefix = persona?.toLowerCase().replace('.agent', '')
 
   const [dataConnections, setDataConnections] = useState(null)
+  const [caaConnected, setCAAConnected] = useState(false)
+  // const [caaConnection, setCAAConnection] = useGetConn()
   const [statusConnections, errorConnections, startGetConnectionsHandler] =
     useGetLoopedConn()
   const [invitationData, setInvitationData] = useState('')
@@ -34,9 +37,58 @@ export default function ConnectivityWrap({
 
   const [statusDelete, deleteError, startDelete] = useDeleteConnections()
 
+  /*
+  // check if connected
+  // http://localhost:8031/connections/create-invitation?alias=airops
+
+    // if connected return ok
+    // if not connect to CAA
+      // might need to generate an invitation ID - check in with Andy
+      // use the ID (if needed) and 
+  */
+
+  const isConnected = (agent, data = false) => {
+    if (!data) return false
+    const connection = data.find(({ their_label, state }) => {
+      const isCAA = their_label.includes(agent)
+      const isActive = state === 'active'
+      console.log({ their_label, state })
+      return isCAA && isActive
+    })
+
+    if (connection) {
+      setCAAConnected(true)
+      return true
+    }
+  }
+
+  // only for holder
+  // other personas should not have or need this function
+  const createConnectionToCAA = (label = 'airops') => {
+    const connected = isConnected(label, dataConnections.results)
+    if (personaPrefix !== 'alice' || connected) {
+      return null
+    }
+    // TODO origin should be an env var for CAA
+    startCreateInvHandler('http://localhost:8041', label, (invitationId) => {
+      startReceiveInvHandler(
+        origin,
+        invitationId,
+        label,
+        setStatusReceiveInv,
+        setLastConnId
+      )
+    })
+  }
+
   useEffect(() => {
     const setStoreDataFn = (resData) => setDataConnections(resData)
-    const intervalIdFetch = startGetConnectionsHandler(origin, setStoreDataFn)
+    const intervalIdFetch = startGetConnectionsHandler(origin, (data) => {
+      setStoreDataFn(data)
+      if (!caaConnected) {
+        createConnectionToCAA()
+      }
+    })
     if (statusConnections !== 'started') clearInterval(intervalIdFetch)
     return function clear() {
       return clearInterval(intervalIdFetch)
@@ -47,7 +99,7 @@ export default function ConnectivityWrap({
     e.stopPropagation()
     const setStoreDataFn = (resData) => setInvitationData(resData)
     if (statusCreateInv !== 'fetching' || statusCreateInv !== 'error') {
-      startCreateInvHandler(origin, personaPrefix, setStoreDataFn)
+      startCreateInvHandler(origin, 'airops', setStoreDataFn)
     }
   }
 
