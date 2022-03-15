@@ -23,7 +23,6 @@ export default function ConnectivityWrap({
 
   const [dataConnections, setDataConnections] = useState(null)
   const [caaConnected, setCAAConnected] = useState(false)
-  // const [caaConnection, setCAAConnection] = useGetConn()
   const [statusConnections, errorConnections, startGetConnectionsHandler] =
     useGetLoopedConn()
   const [invitationData, setInvitationData] = useState('')
@@ -37,18 +36,11 @@ export default function ConnectivityWrap({
 
   const [statusDelete, deleteError, startDelete] = useDeleteConnections()
 
-  /*
-  // check if connected (caaConnected === true)
-    // if connected return ok - iterate over connections and look for caa active
-    // if not - connect to CAA
-      // create and invitation on behalf of CAA
-      // accept the invitation
-      // set isCAAConneted = true
-  */
   const isConnected = (agent, data = false) => {
     if (!data) return false
     const connection = data.find(({ their_label, state }) => {
       const isCAA = their_label.includes(agent)
+      console.log({ their_label, state })
       const isActive = state === 'active'
       return isCAA && isActive
     })
@@ -61,13 +53,13 @@ export default function ConnectivityWrap({
 
   // only for holder
   // other personas should not have or need this function
-  const createConnectionToCAA = (label = 'airops') => {
-    const connected = isConnected(label, dataConnections.results)
-    if (personaPrefix !== 'alice' || connected) {
+  const createConnectionToCAA = (label = 'authority', data) => {
+    const connected = isConnected(label, data?.results)
+    if (personaPrefix !== 'licensee' || connected) {
       return null
     }
     // TODO origin should be an env var for CAA
-    startCreateInvHandler('http://localhost:8041', label, (invitationId) => {
+    startCreateInvHandler('http://localhost:8051', label, (invitationId) => {
       startReceiveInvHandler(
         origin,
         invitationId,
@@ -76,13 +68,14 @@ export default function ConnectivityWrap({
         setLastConnId
       )
     })
+    setCAAConnected(true)
   }
 
   useEffect(() => {
     const setStoreDataFn = (resData) => {
       setDataConnections(resData)
       if (!caaConnected) {
-        createConnectionToCAA()
+        createConnectionToCAA('authority', resData)
       }
     }
     const intervalIdFetch = startGetConnectionsHandler(origin, setStoreDataFn)
@@ -90,7 +83,7 @@ export default function ConnectivityWrap({
     return function clear() {
       return clearInterval(intervalIdFetch)
     }
-  }, [origin, statusConnections, startGetConnectionsHandler])
+  }, [origin, statusConnections, startGetConnectionsHandler, caaConnected])
 
   const clickCreateInvHandler = (e) => {
     e.stopPropagation()
