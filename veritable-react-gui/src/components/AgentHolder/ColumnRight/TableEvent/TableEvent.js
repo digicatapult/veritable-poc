@@ -6,7 +6,7 @@ import ReactJson from 'react-json-view'
 
 export default function TableEvent({ i, j, k, eId, cId, event }) {
   const getTime = (str) => {
-    return str.split(' ')[1].split('.')[0]
+    return new Date(str).toLocaleTimeString()
   }
   const getShortenId = (str) => {
     return `${str.substr(0, 2)}…${str.substr(34, 36)}`
@@ -76,7 +76,12 @@ export default function TableEvent({ i, j, k, eId, cId, event }) {
             </td>
             <td>
               <b>ConnId: </b>
-              <a href="/#" title={cId} className="text-primary">
+              <a
+                href="/#"
+                onClick={(e) => e.preventDefault()}
+                title={cId}
+                className="text-primary"
+              >
                 {getShortenId(cId)}
               </a>
             </td>
@@ -91,6 +96,7 @@ export default function TableEvent({ i, j, k, eId, cId, event }) {
               <a
                 href="/#"
                 className="text-primary"
+                onClick={(e) => e.preventDefault()}
                 title={getDefIdFull(event.by_format)}
               >
                 {getDefId(event.by_format)}
@@ -98,7 +104,12 @@ export default function TableEvent({ i, j, k, eId, cId, event }) {
             </td>
             <td>
               <b>ExId: </b>
-              <a href="/#" className="text-primary" title={eId}>
+              <a
+                href="/#"
+                className="text-primary"
+                onClick={(e) => e.preventDefault()}
+                title={eId}
+              >
                 {getShortenId(eId)}
               </a>
             </td>

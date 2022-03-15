@@ -68,7 +68,11 @@ export default function ColumnRightWrap({ origin }) {
                 View all present-proof records ( &nbsp;
                 <b>
                   Config – Automatically reply to proof request
-                  <a href="/#" className="text-primary">
+                  <a
+                    href="/#"
+                    onClick={(e) => e.preventDefault()}
+                    className="text-primary"
+                  >
                     &nbsp; ON &nbsp;
                   </a>
                 </b>

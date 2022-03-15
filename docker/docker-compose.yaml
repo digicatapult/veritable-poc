@@ -1,0 +1,94 @@
+version: '3'
+
+services:
+  veritable-demo-init:
+    build:
+      context: .
+      dockerfile: Dockerfile.init
+    container_name: veritable-demo-init
+    networks:
+      - von
+  cloudagent-issuer:
+    image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
+    container_name: veritable-cloudagent-issuer
+    command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
+    restart: on-failure
+    env_file: ./AriesCloudAgentCommon.env
+    environment:
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-issuer:8000
+      - ACAPY_LABEL=issuer.agent
+      - ACAPY_WALLET_NAME=issuer
+      - ACAPY_WALLET_KEY=issuer_password
+      - ACAPY_WALLET_SEED=000000000000000000000000000Node1
+      - ACAPY_TRACE_LABEL=issuer.agent.trace
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=true
+    ports:
+      - 8021:8002
+    networks:
+      - von
+  cloudagent-licensee:
+    image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
+    container_name: veritable-cloudagent-licensee
+    command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
+    restart: on-failure
+    env_file: ./AriesCloudAgentCommon.env
+    environment:
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-licensee:8000
+      - ACAPY_LABEL=licensee.agent
+      - ACAPY_WALLET_NAME=licensee
+      - ACAPY_WALLET_KEY=licensee_password
+      - ACAPY_TRACE_TAG=acapy.events
+      - ACAPY_TRACE_LABEL=issuer.agent.trace
+      - ACAPY_PRESERVE_EXCHANGE_RECORDS=true
+      - ACAPY_EMIT_NEW_DIDCOMM_PREFIX=true
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_OFFER=true
+      - ACAPY_AUTO_RESPOND_PRESENTATION_REQUEST=true
+    ports:
+      - 8031:8002
+    networks:
+      - von
+  cloudagent-verifier:
+    image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
+    container_name: veritable-cloudagent-verifier
+    command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
+    restart: on-failure
+    env_file: ./AriesCloudAgentCommon.env
+    environment:
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-verifier:8000
+      - ACAPY_LABEL=verifier.agent
+      - ACAPY_WALLET_NAME=verifier
+      - ACAPY_WALLET_KEY=verifier_password
+      - ACAPY_TRACE_TAG=acapy.events
+      - ACAPY_TRACE_LABEL=verifier.agent.trace
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=true
+    ports:
+      - 8041:8002
+    networks:
+      - von
+  cloudagent-authority:
+    image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
+    container_name: veritable-cloudagent-authority
+    command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
+    restart: on-failure
+    env_file: ./AriesCloudAgentCommon.env
+    environment:
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-authority:8000
+      - ACAPY_LABEL=authority.agent
+      - ACAPY_WALLET_NAME=authority
+      - ACAPY_WALLET_KEY=authority_password
+      - ACAPY_WALLET_SEED=000000000000000000000000000Node2
+      - ACAPY_TRACE_TAG=acapy.events
+      - ACAPY_TRACE_LABEL=authority.agent.trace
+      - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=true
+    ports:
+      - 8051:8002
+    networks:
+      - von
+
+networks:
+  von:
+    external:
+      name: von_von
+
+volumes:
+  cloudagent-data:
