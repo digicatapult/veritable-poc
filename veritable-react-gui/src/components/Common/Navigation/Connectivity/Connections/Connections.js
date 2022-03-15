@@ -20,7 +20,7 @@ export default function Connections({ data }) {
       </ul>
       <ul className="list-group">
         {data.results.map((c, i) => {
-          const t = c.created_at.split(' ')[1].split('.')[0]
+          const t = new Date(c.created_at).toLocaleTimeString()
           const r = c.their_role
           const s = c.state
           const _ = c.connection_id.split('-')

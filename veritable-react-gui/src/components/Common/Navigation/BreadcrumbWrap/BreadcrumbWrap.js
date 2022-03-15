@@ -10,11 +10,11 @@ import Breadcrumb03 from '../../../AgentVerifier/Breadcrumb'
 export default function BreadcrumbWrap({ children, status, persona }) {
   const personaSwitcher = (personaLabelFromBackend) => {
     switch (personaLabelFromBackend.toLowerCase().replace('.agent', '')) {
-      case 'consortiq':
+      case 'issuer':
         return 1
-      case 'alice':
+      case 'licensee':
         return 2
-      case 'airops':
+      case 'verifier':
         return 3
       default:
         return 1

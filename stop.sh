@@ -1,8 +1,6 @@
-cd veritable-aries-cloudagent/demo/
-docker stop consortiq alice airops ; docker rm -f consortiq alice airops
+docker-compose -f ./docker/docker-compose.yaml -p veritable-demo down -v
 sleep 1
-cd ../../
-cd von-network/
+cd ./von-network
 ./manage down
 sleep 1
 cd ../
