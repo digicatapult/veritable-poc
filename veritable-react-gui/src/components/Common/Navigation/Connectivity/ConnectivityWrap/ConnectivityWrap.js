@@ -38,21 +38,18 @@ export default function ConnectivityWrap({
   const [statusDelete, deleteError, startDelete] = useDeleteConnections()
 
   /*
-  // check if connected
-  // http://localhost:8031/connections/create-invitation?alias=airops
-
-    // if connected return ok
-    // if not connect to CAA
-      // might need to generate an invitation ID - check in with Andy
-      // use the ID (if needed) and 
+  // check if connected (caaConnected === true)
+    // if connected return ok - iterate over connections and look for caa active
+    // if not - connect to CAA
+      // create and invitation on behalf of CAA
+      // accept the invitation
+      // set isCAAConneted = true
   */
-
   const isConnected = (agent, data = false) => {
     if (!data) return false
     const connection = data.find(({ their_label, state }) => {
       const isCAA = their_label.includes(agent)
       const isActive = state === 'active'
-      console.log({ their_label, state })
       return isCAA && isActive
     })
 
@@ -82,13 +79,13 @@ export default function ConnectivityWrap({
   }
 
   useEffect(() => {
-    const setStoreDataFn = (resData) => setDataConnections(resData)
-    const intervalIdFetch = startGetConnectionsHandler(origin, (data) => {
-      setStoreDataFn(data)
+    const setStoreDataFn = (resData) => {
+      setDataConnections(resData)
       if (!caaConnected) {
         createConnectionToCAA()
       }
-    })
+    }
+    const intervalIdFetch = startGetConnectionsHandler(origin, setStoreDataFn)
     if (statusConnections !== 'started') clearInterval(intervalIdFetch)
     return function clear() {
       return clearInterval(intervalIdFetch)
