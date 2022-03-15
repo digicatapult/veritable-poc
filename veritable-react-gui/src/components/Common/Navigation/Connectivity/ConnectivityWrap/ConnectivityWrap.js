@@ -37,17 +37,18 @@ export default function ConnectivityWrap({
 
   const isConnected = (agent, data = false) => {
     if (!data) return false
-    const connection = data.find(({ their_label, state }) => {
+    const connectionFound = data.find(({ their_label, state }) => {
       const isCAA = their_label.includes(agent)
-      console.log({ their_label, state })
       const isActive = state === 'active'
       return isCAA && isActive
     })
 
-    if (connection) {
+    if (connectionFound) {
       setCAAConnected(true)
       return true
     }
+
+    return false
   }
 
   // only for holder
