@@ -43,12 +43,10 @@ export default function ConnectivityWrap({
       return isCAA && isActive
     })
 
-    if (connectionFound) {
-      setCAAConnected(true)
-      return true
-    }
+    if (!connectionFound) return false
 
-    return false
+    setCAAConnected(true)
+    return true
   }
 
   // only for holder
@@ -89,7 +87,7 @@ export default function ConnectivityWrap({
     e.stopPropagation()
     const setStoreDataFn = (resData) => setInvitationData(resData)
     if (statusCreateInv !== 'fetching' || statusCreateInv !== 'error') {
-      startCreateInvHandler(origin, 'airops', setStoreDataFn)
+      startCreateInvHandler(origin, personaPrefix, setStoreDataFn)
     }
   }
 
