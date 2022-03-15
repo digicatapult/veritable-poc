@@ -19,7 +19,7 @@ export default function ExchangeRecords({ dataConnRecordEvents }) {
         dataConnRecordEvents.map((o, i) => {
           const [cId, exRecordEvents] = Object.entries(o)[0]
           return (
-            <div key={i} className="text-dark" id={`connection-${i}`}>
+            <div key={cId} className="text-dark" id={`connection-${i}`}>
               {dataConnRecordEvents.length > 1 && (
                 <h6>
                   Events related to Connection Id <small>{cId}</small>:
@@ -32,7 +32,7 @@ export default function ExchangeRecords({ dataConnRecordEvents }) {
                   return (
                     <div
                       className="bg-light mb-2"
-                      key={j}
+                      key={eId}
                       id={`wrapper-${i}-${j}`}
                     >
                       <a
@@ -52,7 +52,7 @@ export default function ExchangeRecords({ dataConnRecordEvents }) {
                           <div className="accordion" id={`accordion-${i}-${j}`}>
                             {events.map((event, k) => (
                               <div
-                                key={k}
+                                key={`${event.pres_ex_id}:${event.updated_at}`}
                                 className="card border border-bottom-1"
                               >
                                 <Event i={i} j={j} k={k} event={event} />

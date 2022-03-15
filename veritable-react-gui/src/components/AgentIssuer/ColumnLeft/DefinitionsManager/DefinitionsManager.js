@@ -81,8 +81,8 @@ export default function DefinitionsManager({
               <option value="" disabled>
                 - Select -
               </option>
-              {dataDefinitionsCreated.map((d, i) => (
-                <option value={d} key={i}>
+              {dataDefinitionsCreated.map((d) => (
+                <option value={d} key={d}>
                   Definition
                   {d.split(':')[1]}.{d.split(':')[3]}.
                   {d.split(':')[4].split('.')[0]}
