@@ -13,27 +13,14 @@ services:
     container_name: veritable-cloudagent-issuer
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
     restart: on-failure
+    env_file: ./AriesCloudAgentCommon.env
     environment:
       - ACAPY_ENDPOINT=http://veritable-cloudagent-issuer:8000
       - ACAPY_LABEL=issuer.agent
-      - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
-      - ACAPY_OUTBOUND_TRANSPORT=http
-      - ACAPY_AUTO_PROVISION=true
-      - ACAPY_WALLET_TYPE=indy
       - ACAPY_WALLET_NAME=issuer
       - ACAPY_WALLET_KEY=issuer_password
       - ACAPY_WALLET_SEED=000000000000000000000000000Node1
-      - ACAPY_ADMIN_INSECURE_MODE=true
-      - ACAPY_LOG_LEVEL=debug
-      - ACAPY_AUTO_PING_CONNECTION=true
-      - ACAPY_AUTO_RESPOND_MESSAGES=true
-      - ACAPY_DEBUG_CONNECTIONS=true
-      - ACAPY_TRACE_TARGET=log
-      - ACAPY_TRACE_TAG=acapy.events
       - ACAPY_TRACE_LABEL=issuer.agent.trace
-      - ACAPY_AUTO_ACCEPT_INVITES=true
-      - ACAPY_AUTO_ACCEPT_REQUESTS=true
-      - ACAPY_AUTO_STORE_CREDENTIAL=true
       - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=true
     ports:
       - 8021:8002
@@ -44,26 +31,14 @@ services:
     container_name: veritable-cloudagent-licensee
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
     restart: on-failure
+    env_file: ./AriesCloudAgentCommon.env
     environment:
       - ACAPY_ENDPOINT=http://veritable-cloudagent-licensee:8000
       - ACAPY_LABEL=licensee.agent
-      - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
-      - ACAPY_OUTBOUND_TRANSPORT=http
-      - ACAPY_AUTO_PROVISION=true
-      - ACAPY_WALLET_TYPE=indy
       - ACAPY_WALLET_NAME=licensee
       - ACAPY_WALLET_KEY=licensee_password
-      - ACAPY_ADMIN_INSECURE_MODE=true
-      - ACAPY_LOG_LEVEL=debug
-      - ACAPY_AUTO_PING_CONNECTION=true
-      - ACAPY_AUTO_RESPOND_MESSAGES=true
-      - ACAPY_DEBUG_CONNECTIONS=true
-      - ACAPY_TRACE_TARGET=log
       - ACAPY_TRACE_TAG=acapy.events
       - ACAPY_TRACE_LABEL=issuer.agent.trace
-      - ACAPY_AUTO_ACCEPT_INVITES=true
-      - ACAPY_AUTO_ACCEPT_REQUESTS=true
-      - ACAPY_AUTO_STORE_CREDENTIAL=true
       - ACAPY_PRESERVE_EXCHANGE_RECORDS=true
       - ACAPY_EMIT_NEW_DIDCOMM_PREFIX=true
       - ACAPY_AUTO_RESPOND_CREDENTIAL_OFFER=true
@@ -77,26 +52,14 @@ services:
     container_name: veritable-cloudagent-verifier
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
     restart: on-failure
+    env_file: ./AriesCloudAgentCommon.env
     environment:
       - ACAPY_ENDPOINT=http://veritable-cloudagent-verifier:8000
       - ACAPY_LABEL=verifier.agent
-      - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
-      - ACAPY_OUTBOUND_TRANSPORT=http
-      - ACAPY_AUTO_PROVISION=true
-      - ACAPY_WALLET_TYPE=indy
       - ACAPY_WALLET_NAME=verifier
       - ACAPY_WALLET_KEY=verifier_password
-      - ACAPY_ADMIN_INSECURE_MODE=true
-      - ACAPY_LOG_LEVEL=debug
-      - ACAPY_AUTO_PING_CONNECTION=true
-      - ACAPY_AUTO_RESPOND_MESSAGES=true
-      - ACAPY_DEBUG_CONNECTIONS=true
-      - ACAPY_TRACE_TARGET=log
       - ACAPY_TRACE_TAG=acapy.events
       - ACAPY_TRACE_LABEL=verifier.agent.trace
-      - ACAPY_AUTO_ACCEPT_INVITES=true
-      - ACAPY_AUTO_ACCEPT_REQUESTS=true
-      - ACAPY_AUTO_STORE_CREDENTIAL=true
       - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=true
     ports:
       - 8041:8002
@@ -107,27 +70,15 @@ services:
     container_name: veritable-cloudagent-authority
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
     restart: on-failure
+    env_file: ./AriesCloudAgentCommon.env
     environment:
       - ACAPY_ENDPOINT=http://veritable-cloudagent-authority:8000
       - ACAPY_LABEL=authority.agent
-      - ACAPY_GENESIS_URL=http://von-webserver-1:8000/genesis
-      - ACAPY_OUTBOUND_TRANSPORT=http
-      - ACAPY_AUTO_PROVISION=true
-      - ACAPY_WALLET_TYPE=indy
       - ACAPY_WALLET_NAME=authority
       - ACAPY_WALLET_KEY=authority_password
       - ACAPY_WALLET_SEED=000000000000000000000000000Node2
-      - ACAPY_ADMIN_INSECURE_MODE=true
-      - ACAPY_LOG_LEVEL=debug
-      - ACAPY_AUTO_PING_CONNECTION=true
-      - ACAPY_AUTO_RESPOND_MESSAGES=true
-      - ACAPY_DEBUG_CONNECTIONS=true
-      - ACAPY_TRACE_TARGET=log
       - ACAPY_TRACE_TAG=acapy.events
       - ACAPY_TRACE_LABEL=authority.agent.trace
-      - ACAPY_AUTO_ACCEPT_INVITES=true
-      - ACAPY_AUTO_ACCEPT_REQUESTS=true
-      - ACAPY_AUTO_STORE_CREDENTIAL=true
       - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=true
     ports:
       - 8051:8002

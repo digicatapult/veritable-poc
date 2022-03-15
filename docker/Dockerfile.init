@@ -23,7 +23,7 @@ curl http://\${VON_NETWORK_WEB_HOST}:8000/genesis -o /home/indy/pool_transaction
 indy-cli /home/indy/init.txt
 EOF
 
-ENV VON_NETWORK_WEB_HOST=von-webserver-1
+ENV VON_NETWORK_WEB_HOST=von_webserver_1
 
 WORKDIR /home/indy
 

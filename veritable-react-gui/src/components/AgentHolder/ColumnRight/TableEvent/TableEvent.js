@@ -6,7 +6,7 @@ import ReactJson from 'react-json-view'
 
 export default function TableEvent({ i, j, k, eId, cId, event }) {
   const getTime = (str) => {
-    return str.split(' ')[1].split('.')[0]
+    return new Date(str).toLocaleTimeString()
   }
   const getShortenId = (str) => {
     return `${str.substr(0, 2)}…${str.substr(34, 36)}`
