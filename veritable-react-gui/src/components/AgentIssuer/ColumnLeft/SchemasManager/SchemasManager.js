@@ -72,8 +72,8 @@ export default function SchemasManager({
               <option value="" disabled>
                 - Select -
               </option>
-              {dataSchemasCreated.map((s, i) => (
-                <option value={s} key={i}>
+              {dataSchemasCreated.map((s) => (
+                <option value={s} key={s}>
                   FlySchemaV{s.split(':')[3]}
                 </option>
               ))}
