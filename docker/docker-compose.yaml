@@ -84,6 +84,18 @@ services:
       - 8051:8002
     networks:
       - von
+  react-authority:
+    image: ghcr.io/digicatapult/veritable-authority:v0.1.0
+    container_name: veritable-react-authority
+    ports:
+      - 3004:3000
+    restart: on-failure
+    environment:
+      - PORT=3000
+      - REACT_APP_API_HOST=localhost
+      - REACT_APP_API_PORT=8051
+    networks:
+      - von
 
 networks:
   von:
