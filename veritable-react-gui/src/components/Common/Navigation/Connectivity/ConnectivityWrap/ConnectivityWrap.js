@@ -38,9 +38,9 @@ export default function ConnectivityWrap({
   const isConnected = (agent, data = false) => {
     if (!data) return false
     const connectionFound = data.find(({ their_label, state }) => {
-      const isCAA = their_label.includes(agent)
+      const hasConnection = their_label.includes(agent)
       const isActive = state === 'active'
-      return isCAA && isActive
+      return hasConnection && isActive
     })
 
     if (!connectionFound) return false
@@ -51,17 +51,17 @@ export default function ConnectivityWrap({
 
   // only for holder
   // other personas should not have or need this function
-  const createConnectionToCAA = (label = 'authority', data) => {
-    const connected = isConnected(label, data?.results)
+  const createConnection = (agent, data) => {
+    const connected = isConnected(agent, data?.results)
     if (personaPrefix !== 'licensee' || connected) {
       return null
     }
     // TODO origin should be an env var for CAA
-    startCreateInvHandler('http://localhost:8051', label, (invitationId) => {
+    startCreateInvHandler('http://localhost:8051', agent, (invitationId) => {
       startReceiveInvHandler(
         origin,
         invitationId,
-        label,
+        agent,
         setStatusReceiveInv,
         setLastConnId
       )
@@ -73,7 +73,7 @@ export default function ConnectivityWrap({
     const setStoreDataFn = (resData) => {
       setDataConnections(resData)
       if (!caaConnected) {
-        createConnectionToCAA('authority', resData)
+        createConnection('authority', resData)
       }
     }
     const intervalIdFetch = startGetConnectionsHandler(origin, setStoreDataFn)
