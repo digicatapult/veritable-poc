@@ -21,6 +21,7 @@ export default function ConnectivityWrap({
   const personaPrefix = persona?.toLowerCase().replace('.agent', '')
 
   const [dataConnections, setDataConnections] = useState(null)
+  const [caaConnected, setCAAConnected] = useState(false)
   const [statusConnections, errorConnections, startGetConnectionsHandler] =
     useGetLoopedConn()
   const [invitationData, setInvitationData] = useState('')
@@ -34,14 +35,53 @@ export default function ConnectivityWrap({
 
   const [statusDelete, deleteError, startDelete] = useDeleteConnections()
 
+  const isConnected = (agent, data = false) => {
+    if (!data) return false
+    const connectionFound = data.find(({ their_label, state }) => {
+      const hasConnection = their_label.includes(agent)
+      const isActive = state === 'active'
+      return hasConnection && isActive
+    })
+
+    if (!connectionFound) return false
+
+    setCAAConnected(true)
+    return true
+  }
+
+  // only for holder
+  // other personas should not have or need this function
+  const createConnection = (agent, data) => {
+    const connected = isConnected(agent, data?.results)
+    if (personaPrefix !== 'licensee' || connected) {
+      return null
+    }
+    // TODO origin should be an env var for CAA
+    startCreateInvHandler('http://localhost:8051', agent, (invitationId) => {
+      startReceiveInvHandler(
+        origin,
+        invitationId,
+        agent,
+        setStatusReceiveInv,
+        setLastConnId
+      )
+    })
+    setCAAConnected(true)
+  }
+
   useEffect(() => {
-    const setStoreDataFn = (resData) => setDataConnections(resData)
+    const setStoreDataFn = (resData) => {
+      setDataConnections(resData)
+      if (!caaConnected) {
+        createConnection('authority', resData)
+      }
+    }
     const intervalIdFetch = startGetConnectionsHandler(origin, setStoreDataFn)
     if (statusConnections !== 'started') clearInterval(intervalIdFetch)
     return function clear() {
       return clearInterval(intervalIdFetch)
     }
-  }, [origin, statusConnections, startGetConnectionsHandler])
+  }, [origin, statusConnections, startGetConnectionsHandler, caaConnected])
 
   const clickCreateInvHandler = (e) => {
     e.stopPropagation()
