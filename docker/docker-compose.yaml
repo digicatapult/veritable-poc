@@ -97,6 +97,45 @@ services:
     networks:
       - von
 
+  react-holder:
+    image: ghcr.io/digicatapult/veritable-holder:v0.1.0
+    container_name: veritable-react-holder
+    ports:
+      - 3001:3000
+    restart: on-failure
+    environment:
+      - PORT=3000
+      - REACT_APP_API_HOST=localhost
+      - REACT_APP_API_PORT=8021
+    networks:
+      - von
+
+  react-issuer:
+    image: ghcr.io/digicatapult/veritable-issuer:v0.1.0
+    container_name: veritable-react-issuer
+    ports:
+      - 3002:3000
+    restart: on-failure
+    environment:
+      - PORT=3000
+      - REACT_APP_API_HOST=localhost
+      - REACT_APP_API_PORT=8031
+    networks:
+      - von
+      
+  react-verifier:
+    image: ghcr.io/digicatapult/veritable-verifier:v0.1.0
+    container_name: veritable-react-verifier
+    ports:
+      - 3003:3000
+    restart: on-failure
+    environment:
+      - PORT=3000
+      - REACT_APP_API_HOST=localhost
+      - REACT_APP_API_PORT=8041
+    networks:
+      - von
+
 networks:
   von:
     external:

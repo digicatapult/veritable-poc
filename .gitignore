@@ -1,13 +1,10 @@
-# Git ignore file ( see help.github.com/articles/ignoring-files/ ).
-
-# ReactDependencies
-veritable-react-gui/node_modules
-
-# ReactTesting
-veritable-react-gui/coverage
-
-# ReactProduction
-veritable-react-gui/build
+.git/
+.DS_Store
+.env
+.eslintignore
+.eslintrc
+.gitignore
+.prettierrc
 
 # Tests agent standalone script
 tests-agent/node_modules

@@ -16,17 +16,14 @@ echo -en "\n\nWaitingForIssuer"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES
 echo -en "\n\nWaitingForLicensee"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:8031/status 2>&1); echo -n .; done
 echo -en "\n\nWaitingForVerifier"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:8041/status 2>&1); echo -n .; done
 echo -en "\n\nWaitingForAuthority"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:8051/status 2>&1); echo -n .; done
-echo -en "\n\nWaitingForAuthorityReact"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:3004 2>&1); echo -n .; done
 echo -e "\n\nDONE"
 
 # START REACT
-cd veritable-react-gui/
-[ ! -d "./node_modules/" ] && npm install
-nohup npm start > /tmp/react.log 2> /tmp/react.log &
-echo -en "\n\nWaitingForReactJsGui"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:3000 2>&1); echo -n .; done
-cd ../
-echo -e "\n\nDONE"
-echo -e "\nYou can now view the GUI in the browser."
+echo "Starting React clients..."
+echo -en "\n\nWaitingForAuthorityReact"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:3004 2>&1); echo -n .; done
+echo -en "\n\nWaitingForVerifierReact"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:3003 2>&1); echo -n .; done
+echo -en "\n\nWaitingForIssuerReact"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:3002 2>&1); echo -n .; done
+echo -en "\n\nWaitingForHolderReact"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:3001 2>&1); echo -n .; done
 
 # ABOUT LOGS
 echo -e "\n\nAll the backend and frontend logs are ready to be viewed."
