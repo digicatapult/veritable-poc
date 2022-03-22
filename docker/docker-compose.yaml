@@ -85,7 +85,7 @@ services:
     networks:
       - von
   react-authority:
-    image: ghcr.io/digicatapult/veritable-authority:v0.1.0
+    image: ghcr.io/digicatapult/veritable-authority:latest
     container_name: veritable-react-authority
     ports:
       - 3004:3000
