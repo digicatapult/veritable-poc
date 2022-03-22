@@ -92,8 +92,6 @@ services:
     restart: on-failure
     environment:
       - PORT=3000
-      - REACT_APP_API_HOST=localhost
-      - REACT_APP_API_PORT=8051
     networks:
       - von
 
@@ -105,8 +103,6 @@ services:
     restart: on-failure
     environment:
       - PORT=3000
-      - REACT_APP_API_HOST=localhost
-      - REACT_APP_API_PORT=8021
     networks:
       - von
 
@@ -118,8 +114,6 @@ services:
     restart: on-failure
     environment:
       - PORT=3000
-      - REACT_APP_API_HOST=localhost
-      - REACT_APP_API_PORT=8031
     networks:
       - von
       
@@ -131,8 +125,6 @@ services:
     restart: on-failure
     environment:
       - PORT=3000
-      - REACT_APP_API_HOST=localhost
-      - REACT_APP_API_PORT=8041
     networks:
       - von
 
