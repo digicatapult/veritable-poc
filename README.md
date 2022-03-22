@@ -216,7 +216,7 @@ The table below, shows all the backend containerised services, assuming the syst
 | ---------------------------- | -------------------------------- | ------------------------------ |
 | bcgovimages/aries-cloudagent | 0.0.0.0:8051->8002/tcp           | veritable-cloudagent-authority |
 | bcgovimages/aries-cloudagent | 0.0.0.0:8041->8002/tcp           | veritable-cloudagent-verifier  |
-| bcgovimages/aries-cloudagent | 0.0.0.0:8031->8002/tcp           | veritable-cloudagent-licensee  |
+| bcgovimages/aries-cloudagent | 0.0.0.0:8031->8002/tcp           | veritable-cloudagent-holder  |
 | bcgovimages/aries-cloudagent | 0.0.0.0:8021->8002/tcp           | veritable-cloudagent-issuer    |
 | von-network-base             | 0.0.0.0:9000->8000/tcp           | von_webserver_1                |
 | von-network-base             | 0.0.0.0:9701-9702->9701-9702/tcp | von_node1_1                    |

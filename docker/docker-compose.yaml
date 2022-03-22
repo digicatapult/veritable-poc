@@ -26,17 +26,17 @@ services:
       - 8021:8002
     networks:
       - von
-  cloudagent-licensee:
+  cloudagent-holder:
     image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
-    container_name: veritable-cloudagent-licensee
+    container_name: veritable-cloudagent-holder
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
     restart: on-failure
     env_file: ./AriesCloudAgentCommon.env
     environment:
-      - ACAPY_ENDPOINT=http://veritable-cloudagent-licensee:8000
-      - ACAPY_LABEL=licensee.agent
-      - ACAPY_WALLET_NAME=licensee
-      - ACAPY_WALLET_KEY=licensee_password
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-holder:8000
+      - ACAPY_LABEL=holder.agent
+      - ACAPY_WALLET_NAME=holder
+      - ACAPY_WALLET_KEY=holder_password
       - ACAPY_TRACE_TAG=acapy.events
       - ACAPY_TRACE_LABEL=issuer.agent.trace
       - ACAPY_PRESERVE_EXCHANGE_RECORDS=true
