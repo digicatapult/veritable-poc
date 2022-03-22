@@ -98,7 +98,7 @@ services:
       - von
 
   react-holder:
-    image: ghcr.io/digicatapult/veritable-holder:v0.1.0
+    image: ghcr.io/digicatapult/veritable-holder:latest
     container_name: veritable-react-holder
     ports:
       - 3001:3000
@@ -111,7 +111,7 @@ services:
       - von
 
   react-issuer:
-    image: ghcr.io/digicatapult/veritable-issuer:v0.1.0
+    image: ghcr.io/digicatapult/veritable-issuer:latest
     container_name: veritable-react-issuer
     ports:
       - 3002:3000
@@ -124,7 +124,7 @@ services:
       - von
       
   react-verifier:
-    image: ghcr.io/digicatapult/veritable-verifier:v0.1.0
+    image: ghcr.io/digicatapult/veritable-verifier:latest
     container_name: veritable-react-verifier
     ports:
       - 3003:3000
