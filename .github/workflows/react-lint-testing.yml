@@ -19,34 +19,3 @@ on:
 # defaults:
 #   run:
 #     working-directory: veritable-react-gui
-
-
-jobs:
-  test:
-
-    runs-on: ubuntu-20.04
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: Set Node.js 14.x
-      uses: actions/setup-node@v2
-      with:
-        node-version: 14.x
-
-    - name: Install dependencies
-      working-directory: ./veritable-react-gui
-      run: |
-        npm install
-
-    - name: Run lint
-      working-directory: ./veritable-react-gui
-      run: |
-        npm run lint
-
-    - name: Print tag if present
-      run: |
-        echo "Tags: $TAGS"
-      env:
-        TAGS: ${{ github.event.inputs.tags }}
