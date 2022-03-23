@@ -26,17 +26,17 @@ services:
       - 8021:8002
     networks:
       - von
-  cloudagent-licensee:
+  cloudagent-holder:
     image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
-    container_name: veritable-cloudagent-licensee
+    container_name: veritable-cloudagent-holder
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
     restart: on-failure
     env_file: ./AriesCloudAgentCommon.env
     environment:
-      - ACAPY_ENDPOINT=http://veritable-cloudagent-licensee:8000
-      - ACAPY_LABEL=licensee.agent
-      - ACAPY_WALLET_NAME=licensee
-      - ACAPY_WALLET_KEY=licensee_password
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-holder:8000
+      - ACAPY_LABEL=holder.agent
+      - ACAPY_WALLET_NAME=holder
+      - ACAPY_WALLET_KEY=holder_password
       - ACAPY_TRACE_TAG=acapy.events
       - ACAPY_TRACE_LABEL=issuer.agent.trace
       - ACAPY_PRESERVE_EXCHANGE_RECORDS=true
@@ -85,15 +85,46 @@ services:
     networks:
       - von
   react-authority:
-    image: ghcr.io/digicatapult/veritable-authority:v0.1.0
+    image: ghcr.io/digicatapult/veritable-authority:latest
     container_name: veritable-react-authority
     ports:
       - 3004:3000
     restart: on-failure
     environment:
       - PORT=3000
-      - REACT_APP_API_HOST=localhost
-      - REACT_APP_API_PORT=8051
+    networks:
+      - von
+
+  react-holder:
+    image: ghcr.io/digicatapult/veritable-holder:latest
+    container_name: veritable-react-holder
+    ports:
+      - 3001:3000
+    restart: on-failure
+    environment:
+      - PORT=3000
+    networks:
+      - von
+
+  react-issuer:
+    image: ghcr.io/digicatapult/veritable-issuer:latest
+    container_name: veritable-react-issuer
+    ports:
+      - 3002:3000
+    restart: on-failure
+    environment:
+      - PORT=3000
+    networks:
+      - von
+      
+  react-verifier:
+    image: ghcr.io/digicatapult/veritable-verifier:latest
+    container_name: veritable-react-verifier
+    ports:
+      - 3003:3000
+    restart: on-failure
+    environment:
+      - PORT=3000
     networks:
       - von
 

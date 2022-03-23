@@ -16,9 +16,9 @@ This project is a _four-agent-based_ Self-Sovereign Identity ( _SSI_ ) proof of 
 |     | The 4 _GUIs_ that can be viewed :        |                                                 |
 | :-- | :--------------------------------------- | :---------------------------------------------- |
 | #   | **Type & Alias**                         | **Link**                                        |
-| 1   | **Issuer** - _Consortiq_ (Pilot Trainer) | [localhost:3000/?#1](http://localhost:3000/?#1) |
-| 2   | **Holder** - _Alice_ (Drone Pilot)       | [localhost:3000/?#2](http://localhost:3000/?#2) |
-| 3   | **Verifier** - _Airops_ (Airside Ops)    | [localhost:3000/?#3](http://localhost:3000/?#3) |
+| 1   | **Issuer** - _Consortiq_ (Pilot Trainer) | [localhost:3002](http://localhost:3002) |
+| 2   | **Holder** - _Alice_ (Drone Pilot)       | [localhost:3001](http://localhost:3001) |
+| 3   | **Verifier** - _Airops_ (Airside Ops)    | [localhost:3003](http://localhost:3003) |
 | 3   | **Authority** - _CAA_                    | [localhost:3004](http://localhost:3004)         |
 
 |     | The Explorer for the underlying _DLT_ that can be viewed with : |                                         |
@@ -107,7 +107,7 @@ To begin, we assume that you already have the backend up and running activated w
 
 You can demonstrate that the underlying ledger is up and that the four validator nodes are operational by displaying the DLT Explorer in a new tab and by browsing through a few transactions ( **[localhost:9000](http://localhost:9000)** and **[localhost:9000/browse/domain](http://localhost:9000/browse/domain)** ).
 
-If you haven't done so already, open the 1st GUI in a new tab ( **[http://localhost:3000/?#1](http://localhost:3000/?#1)** ) and let it use its own pre-configured endpoint ( `Switch to CustomEndpoint - 8021` ); open the 2nd GUI ( **[http://localhost:3000/?#2](http://localhost:3000/?#2)** ) and let this one also use its endpoint ( `Switch to CustomEndpoint` ); and, finally open the 3rd GUI ( **[http://localhost:3000/?#3](http://localhost:3000/?#3)** ) and similarly let it use its own pre-configured url ( `Switch to CustomEndpoint` ).
+If you haven't done so already, open the 1st GUI in a new tab ( **[http://localhost:3001](http://localhost:3001)** ) and let it use its own pre-configured endpoint ( `Switch to CustomEndpoint - 8021` ); open the 2nd GUI ( **[http://localhost:3002](http://localhost:3002)** ) and let this one also use its endpoint ( `Switch to CustomEndpoint` ); and, finally open the 3rd GUI ( **[http://localhost:3003](http://localhost:3003)** ) and similarly let it use its own pre-configured url ( `Switch to CustomEndpoint` ) and same applies to last but not least 4th GUI  ( **[http://localhost:3004](http://localhost:3004)** ) .
 
 1. Let's start with the creation of the overall credentials structure. In this example, we're allowing the training company ( _Drone Training Ltd_ ) to set the two elements needed for this structure, that is, the _credential schema_ and the _credential definition_, but in the future, this would be the _Civil Aviation Authority_ ( _CAA_ ) or another suitable authority.
 
@@ -216,7 +216,7 @@ The table below, shows all the backend containerised services, assuming the syst
 | ---------------------------- | -------------------------------- | ------------------------------ |
 | bcgovimages/aries-cloudagent | 0.0.0.0:8051->8002/tcp           | veritable-cloudagent-authority |
 | bcgovimages/aries-cloudagent | 0.0.0.0:8041->8002/tcp           | veritable-cloudagent-verifier  |
-| bcgovimages/aries-cloudagent | 0.0.0.0:8031->8002/tcp           | veritable-cloudagent-licensee  |
+| bcgovimages/aries-cloudagent | 0.0.0.0:8031->8002/tcp           | veritable-cloudagent-holder  |
 | bcgovimages/aries-cloudagent | 0.0.0.0:8021->8002/tcp           | veritable-cloudagent-issuer    |
 | von-network-base             | 0.0.0.0:9000->8000/tcp           | von_webserver_1                |
 | von-network-base             | 0.0.0.0:9701-9702->9701-9702/tcp | von_node1_1                    |
@@ -230,9 +230,12 @@ The table below, shows all the backend containerised services, assuming the syst
 
 The table below, shows information about the central frontend GUI web service ( it is important to note, here, this service is not containerised ).
 
-| #   | SERVICE                  | COMMAND       | PORTS | HOST                               |
-| --- | ------------------------ | ------------- | ----- | ---------------------------------- |
-| NA  | React development server | **npm start** | 3000  | [localhost](http://localhost:3000) |
+| #         | SERVICE                  | COMMAND       | PORTS | HOST                               | REPOSITORY                                                      |
+| --------- | ------------------------ | ------------- | ----- | ---------------------------------- | --------------------------------------------------------------- |
+| Holder    | React development server | **npm start** | 3001  | [holder](http://localhost:3001)    | [holder](https://github.com/digicatapult/veritable-holder)      |
+| Issuer    | React development server | **npm start** | 3002  | [issuer](http://localhost:3002)    | [issuer](https://github.com/digicatapult/veritable-issuer)      |
+| Verifier  | React development server | **npm start** | 3003  | [verifier](http://localhost:3003)  | [verifier](https://github.com/digicatapult/veritable-verifier)  |
+| Authority | React development server | **npm start** | 3004  | [authority](http://localhost:3004) | [authority](https://github.com/digicatapult/veritable-authority)|
 
 ---
 
@@ -310,22 +313,6 @@ Another aspect. that needs to be highlighted, is the way the frontend is program
 One can run the backend on a different machine ( with any custom _IP address_ or _port number_ ) than the frontend machine. In theory, the backend could be uploaded on an on-line machines or multiple machines.
 
 All you need to do to connect to your custom backend is: when you open the GUI, instead of clicking `Switch to CustomEndpoint`, select the `Dev` option, fill in the `Custom Endpoint - UserDefined` with your custom endpoint URL and hit `Switch to Custom`, that's it.
-
----
-
-## Theme Selector
-
-To help differentiate the GUIs, every agent view uses a different theme ( different set of colours, fonts and icon styles ).
-
-As such, the React application includes, inside the `./component/` folder, an `AppThemeSelector` wrapper which loads a different CSS every time the a different href is detected in the URL:
-
-- `/?#1` or `/` Theme01 - green ( `./stylesheets/AppTheme01.css` )
-- `/?#2` Theme02 - blue ( `./stylesheets/AppTheme02.css` )
-- `/?#3` Theme03 - blue ( `./stylesheets/AppTheme03.css` )
-
-The _theme selector_ starts _dynamically_ inserting the stylesheet into the DOM by making use of `React.Suspense` and `React.lazy` as described here, in this **[Medium article](https://blog.bitsrc.io/f05c4cfde10c)**.
-
-In that respect, in order to add another theme, like for example, for a forth agent, please change the _theme selector_ accordingly.
 
 ---
 
