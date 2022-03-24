@@ -130,7 +130,6 @@ services:
 
 networks:
   von:
-    external:
       name: von_von
 
 volumes:
