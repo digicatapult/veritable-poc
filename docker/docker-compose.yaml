@@ -27,7 +27,7 @@ services:
     networks:
       - von
   cloudagent-holder-proxy:
-    image: ghcr.io/digicatapult/veritable-acapy-proxy:multitenant
+    image: ghcr.io/digicatapult/veritable-acapy-proxy:latest
     container_name: veritable-cloudagent-holder-proxy
     restart: on-failure
     environment:
@@ -71,6 +71,11 @@ services:
       - ACAPY_MULTITENANT_ADMIN=true
       - ACAPY_ADMIN_INSECURE_MODE=false
       - ACAPY_ADMIN_API_KEY=CLOUDAGENT_HOLDER_API_KEY
+      # admin wallet is required to avoid https://github.com/hyperledger/aries-cloudagent-python/issues/1691
+      - ACAPY_WALLET_TYPE=indy
+      - ACAPY_WALLET_NAME=holder
+      - ACAPY_WALLET_KEY=holder_password
+      - ACAPY_AUTO_PROVISION=true
     ports:
       - 8032:8002
     networks:
@@ -124,7 +129,7 @@ services:
       - von
 
   react-holder:
-    image: ghcr.io/digicatapult/veritable-holder:multitenant
+    image: ghcr.io/digicatapult/veritable-holder:latest
     container_name: veritable-react-holder
     ports:
       - 3001:3000
