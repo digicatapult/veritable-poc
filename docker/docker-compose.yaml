@@ -113,6 +113,7 @@ services:
       - ACAPY_TRACE_TAG=acapy.events
       - ACAPY_TRACE_LABEL=authority.agent.trace
       - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=true
+      - ACAPY_AUTO_VERIFY_PRESENTATION=true
     ports:
       - 8051:8002
     networks:
