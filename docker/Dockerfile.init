@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 
-from bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
+FROM bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
 
 # add in init command script with no secrets
 COPY <<EOF /home/indy/init.txt
