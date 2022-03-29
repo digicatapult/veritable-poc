@@ -6,5 +6,9 @@
 .gitignore
 .prettierrc
 
+docker/cypress/downloads
+docker/cypress/videos
+docker/cypress/screenshots
+
 # Tests agent standalone script
 tests-agent/node_modules
