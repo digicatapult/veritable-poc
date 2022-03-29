@@ -14,7 +14,7 @@ echo -en "\n\nWaitingForVonWebserver"; RES=""; while [[ -z "$RES" ]]; do sleep .
 docker compose -f ./docker/docker-compose.yaml pull 
 docker compose -f ./docker/docker-compose.yaml -p veritable-demo up --build -d
 echo -en "\n\nWaitingForIssuer"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:8021/status 2>&1); echo -n .; done
-echo -en "\n\nWaitingForHolder"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:8031/status 2>&1); echo -n .; done
+echo -en "\n\nWaitingForHolder"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:8031/health 2>&1); echo -n .; done
 echo -en "\n\nWaitingForVerifier"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:8041/status 2>&1); echo -n .; done
 echo -en "\n\nWaitingForAuthority"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:8051/status 2>&1); echo -n .; done
 echo -e "\n\nDONE"

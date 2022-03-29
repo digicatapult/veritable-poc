@@ -26,25 +26,58 @@ services:
       - 8021:8002
     networks:
       - von
+  cloudagent-holder-proxy:
+    image: ghcr.io/digicatapult/veritable-acapy-proxy:latest
+    container_name: veritable-cloudagent-holder-proxy
+    restart: on-failure
+    environment:
+      - PORT=8000
+      - SERVICE_HOST=localhost
+      - SERVICE_PORT=8031
+      - ACAPY_API_KEY=CLOUDAGENT_HOLDER_API_KEY
+      - ACAPY_ADMIN_SERVICE=http://veritable-cloudagent-holder:8002
+      - AUTH_AUDIENCE=http://veritable-dev
+      - AUTH_ISSUER=https://veritable.eu.auth0.com
+    ports:
+      - 8031:8000
+    networks:
+      - von
   cloudagent-holder:
     image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
     container_name: veritable-cloudagent-holder
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
     restart: on-failure
-    env_file: ./AriesCloudAgentCommon.env
     environment:
+      - ACAPY_GENESIS_URL=http://webserver:8000/genesis
       - ACAPY_ENDPOINT=http://veritable-cloudagent-holder:8000
       - ACAPY_LABEL=holder.agent
-      - ACAPY_WALLET_NAME=holder
-      - ACAPY_WALLET_KEY=holder_password
+      - ACAPY_OUTBOUND_TRANSPORT=http
+      - ACAPY_LOG_LEVEL=debug
+      - ACAPY_TRACE_TARGET=log
       - ACAPY_TRACE_TAG=acapy.events
+      - ACAPY_DEBUG_CONNECTIONS=true
       - ACAPY_TRACE_LABEL=issuer.agent.trace
       - ACAPY_PRESERVE_EXCHANGE_RECORDS=true
       - ACAPY_EMIT_NEW_DIDCOMM_PREFIX=true
+      - ACAPY_AUTO_PING_CONNECTION=true
+      - ACAPY_AUTO_RESPOND_MESSAGES=true
+      - ACAPY_AUTO_ACCEPT_INVITES=true
+      - ACAPY_AUTO_ACCEPT_REQUESTS=true
+      - ACAPY_AUTO_STORE_CREDENTIAL=true
       - ACAPY_AUTO_RESPOND_CREDENTIAL_OFFER=true
       - ACAPY_AUTO_RESPOND_PRESENTATION_REQUEST=true
+      - ACAPY_MULTITENANT=true
+      - ACAPY_MULTITENANT_JWT_SECRET=CLOUDAGENT_HOLDER_JWT_SECRET
+      - ACAPY_MULTITENANT_ADMIN=true
+      - ACAPY_ADMIN_INSECURE_MODE=false
+      - ACAPY_ADMIN_API_KEY=CLOUDAGENT_HOLDER_API_KEY
+      # admin wallet is required to avoid https://github.com/hyperledger/aries-cloudagent-python/issues/1691
+      - ACAPY_WALLET_TYPE=indy
+      - ACAPY_WALLET_NAME=holder
+      - ACAPY_WALLET_KEY=holder_password
+      - ACAPY_AUTO_PROVISION=true
     ports:
-      - 8031:8002
+      - 8032:8002
     networks:
       - von
   cloudagent-verifier:
@@ -80,6 +113,7 @@ services:
       - ACAPY_TRACE_TAG=acapy.events
       - ACAPY_TRACE_LABEL=authority.agent.trace
       - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=true
+      - ACAPY_AUTO_VERIFY_PRESENTATION=true
     ports:
       - 8051:8002
     networks:
@@ -116,7 +150,7 @@ services:
       - PORT=3000
     networks:
       - von
-      
+
   react-verifier:
     image: ghcr.io/digicatapult/veritable-verifier:latest
     container_name: veritable-react-verifier
