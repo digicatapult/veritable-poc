@@ -86,7 +86,7 @@ services:
     networks:
       - von
   react-regulator:
-    image: ghcr.io/digicatapult/veritable-regulator:latest
+    image: ghcr.io/digicatapult/veritable-authority:latest
     container_name: veritable-react-regulator
     ports:
       - 3004:3000
