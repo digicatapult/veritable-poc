@@ -32,7 +32,7 @@ Note: The PoC application shown here, is ideal for demonstration purposes only. 
 
 ## E2E Testing
 
-For e2e testing we are using cypress and **docker image** - `image: "cypress/included:3.2.0"` which comes with preinstalled cypress. Cypress config and tests can be found in `./cypress` folder. Test flows or Cypress specs are located in `/cypress/integration` folder. Each spec should represent a flow e.g.
+For e2e testing we are using `Cypress` npm package. Cypress config and tests can be found in `./cypress` folder. Test flows or **Cypress** specs are located in `/cypress/integration` folder. Each spec should represent a flow e.g.
 - creating a connection with authority
 - requesting proof
 - issues a credential
