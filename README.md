@@ -35,20 +35,27 @@ Note: The PoC application shown here, is ideal for demonstration purposes only. 
 For e2e testing we are using cypress and **docker image** - `image: "cypress/included:3.2.0"` which comes with preinstalled cypress. Cypress config and tests can be found in `./doocker/` folder. Test flows or Cypress specs are located in `./docker/cypress/integration/` folder. Each spec should represent a flow e.g.
 - creating a connection with authority
 - requesting proof
+- issues a credential
 
-In order to run them locally this will require all services including **acapy** agents and **react** clients and Cypress installed.
-> Installing Cypress locally
-```sh
-npm i -g Cypress
-```
-> Running tests
-```sh
-cd docker/
-npx cypress run 
-# or
-npx cypress open
-```
+In order to run them locally this will require all services including **acapy** agents and **react** clients and Cypress installed along with cypress.env.json file.
 
+### Running Locally
+
+Create a new file at the root of this project `cypress.env.json`. And specify the below variables
+```json
+{
+  "holder_username": "username",
+  "holder_password": "password",
+  "holder_url": "http://localhost:3001",
+  "issuer_url": "http://localhost:3002",
+  "verifier_url": "http://localhost:3003",
+  "authority_url": "http://localhost:3004"
+}
+```
+> Running tests locally
+```sh
+./scripts/e2e.sh
+```
 ---
 
 
@@ -97,7 +104,7 @@ That is needed for the backend, for the frontend, Node is needed, ideally **Node
 
 Before moving to requirements related to the frontend, another extra small dependency is required, called **JQ**, the widely-used command-line JSON parser (used by the Aries Python Cloudagent), ideally **v1.6** or higher ( just use `sudo apt install -y jq` or `brew install jq` to install it ).
 
-All the _npm_ packages will be installed, automatically, when starting the project ( `start.sh` ), if the _node modules_ folder is not present, as in, if this folder can't be found inside _veritable-poc-agents_ (if there are any issues running this project, one solution would be to delete this folder and start again) .
+All the _npm_ packages will be installed, automatically, when starting the project ( `./scripts/start.sh` ), if the _node modules_ folder is not present, as in, if this folder can't be found inside _veritable-poc-agents_ (if there are any issues running this project, one solution would be to delete this folder and start again) .
 
 Just for the record, the following _npm_ packages will be installed ( all other _backend dependencies_ are virtualised ): `testing-library/jest-dom^5.14.1`; `testing-library/react^11.2.7`; `testing-library/user-event^12.8.3`; `react^17.0.2`; `react-dom^17.0.2`; `react-json-view^1.21.3`; `react-scripts4.0.3`.
 
@@ -108,7 +115,7 @@ Just for the record, the following _npm_ packages will be installed ( all other 
 In order to start the application, simply run the included shell script:
 
 ```sh
-./start.sh
+./scripts/start.sh
 ```
 
 Similarly, to stop everything, use the included shell script ( _stop.sh_ ).
@@ -125,7 +132,7 @@ This section speaks about how to go about demoing the SSI fundamentals ( _commun
 
 The goal of this part is to show, after creating a DID Communication channel between Consortiq and Alice, how to create a set of credentials together with how to create a credential schema plus definition.
 
-To begin, we assume that you already have the backend up and running activated with `start.sh` ( the Indy-based VON network plus the Aries agent Python system ). As it stands, the current DLT network is made out of virtual nodes that sit on the same local machine but, ultimately, these will be run by trusted members of the aviation ecosystem.
+To begin, we assume that you already have the backend up and running activated with `./scripts/start.sh` ( the Indy-based VON network plus the Aries agent Python system ). As it stands, the current DLT network is made out of virtual nodes that sit on the same local machine but, ultimately, these will be run by trusted members of the aviation ecosystem.
 
 You can demonstrate that the underlying ledger is up and that the four validator nodes are operational by displaying the DLT Explorer in a new tab and by browsing through a few transactions ( **[localhost:9000](http://localhost:9000)** and **[localhost:9000/browse/domain](http://localhost:9000/browse/domain)** ).
 

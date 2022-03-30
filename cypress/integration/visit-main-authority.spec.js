@@ -1,6 +1,8 @@
+import env from '../../cypress.env.json'
+
 describe('get react-authority', () => {
   it('visits main page', () => {
-    cy.visit(Cypress.env('AUTHORITY_URL'))
+    cy.visit(env.authority_url)
     cy.get('body')
   })
 })

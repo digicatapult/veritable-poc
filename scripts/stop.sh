@@ -1,4 +1,4 @@
-docker-compose -f ./docker/docker-compose.yaml -p veritable-demo down -v
+docker-compose -f ../docker/docker-compose.yaml -p veritable-demo down -v
 sleep 1
 cd ./von-network
 ./manage down

@@ -129,26 +129,6 @@ services:
     networks:
       - von
 
-  cypress:
-    image: "cypress/included:3.2.0"
-    depends_on:
-      - react-holder
-      - react-issuer
-      - react-verifier
-      - react-authority
-    environment:
-      - CYPRESS_TEST_USERNAME=alice@drone-pilot.com
-      - CYPRESS_TEST_PASSWORD=dronePilot01
-      - CYPRESS_HOLDER_URL=http://react-holder:3000
-      - CYPRESS_ISSUER_URL=http://react-issuer:3000
-      - CYPRESS_VERIFIER_URL=http://react-verifier:3000
-      - CYPRESS_AUTHORITY_URL=http://react-authority:3000
-    working_dir: /cypress
-    volumes:
-      - ./:/cypress
-    networks:
-      - von
-
 networks:
   von:
     external:
