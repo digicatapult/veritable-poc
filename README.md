@@ -48,7 +48,7 @@ Create a new file at the root of this project `cypress.env.json`. And specify th
   "holder_password": "password",
   "holder_url": "http://localhost:3001",
   "issuer_url": "http://localhost:3002",
-  "verifier_url": "http://localhost:s",
+  "verifier_url": "http://localhost:3003",
   "authority_url": "http://localhost:3004"
 }
 ```
