@@ -32,7 +32,7 @@ Note: The PoC application shown here, is ideal for demonstration purposes only. 
 
 ## E2E Testing
 
-For e2e testing we are using cypress and **docker image** - `image: "cypress/included:3.2.0"` which comes with preinstalled cypress. Cypress config and tests can be found in `./doocker/` folder. Test flows or Cypress specs are located in `./docker/cypress/integration/` folder. Each spec should represent a flow e.g.
+For e2e testing we are using cypress and **docker image** - `image: "cypress/included:3.2.0"` which comes with preinstalled cypress. Cypress config and tests can be found in `./cypress` folder. Test flows or Cypress specs are located in `/cypress/integration` folder. Each spec should represent a flow e.g.
 - creating a connection with authority
 - requesting proof
 - issues a credential
@@ -48,16 +48,20 @@ Create a new file at the root of this project `cypress.env.json`. And specify th
   "holder_password": "password",
   "holder_url": "http://localhost:3001",
   "issuer_url": "http://localhost:3002",
-  "verifier_url": "http://localhost:3003",
+  "verifier_url": "http://localhost:s",
   "authority_url": "http://localhost:3004"
 }
+```
+> Start agents and other dependencies
+```sh
+./scripts/start.sh
 ```
 > Running tests locally
 ```sh
 ./scripts/e2e.sh
 ```
----
 
+---
 
 ## System Setup
 
