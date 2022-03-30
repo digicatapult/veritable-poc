@@ -12,7 +12,7 @@ services:
     image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
     container_name: veritable-cloudagent-issuer
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
-    restart: on-failure
+    restart: on-failure:10
     env_file: ./AriesCloudAgentCommon.env
     environment:
       - ACAPY_ENDPOINT=http://veritable-cloudagent-issuer:8000
@@ -46,7 +46,8 @@ services:
     image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
     container_name: veritable-cloudagent-holder
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
-    restart: on-failure
+    restart: on-failure:10
+    env_file: ./AriesCloudAgentCommon.env
     environment:
       - ACAPY_GENESIS_URL=http://webserver:8000/genesis
       - ACAPY_ENDPOINT=http://veritable-cloudagent-holder:8000
@@ -84,7 +85,7 @@ services:
     image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
     container_name: veritable-cloudagent-verifier
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
-    restart: on-failure
+    restart: on-failure:10
     env_file: ./AriesCloudAgentCommon.env
     environment:
       - ACAPY_ENDPOINT=http://veritable-cloudagent-verifier:8000
@@ -102,7 +103,7 @@ services:
     image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
     container_name: veritable-cloudagent-authority
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
-    restart: on-failure
+    restart: on-failure:10
     env_file: ./AriesCloudAgentCommon.env
     environment:
       - ACAPY_ENDPOINT=http://veritable-cloudagent-authority:8000
