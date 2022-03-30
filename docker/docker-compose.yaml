@@ -69,7 +69,7 @@ services:
     image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
     container_name: veritable-cloudagent-authority
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
-    restart: on-failure
+    restart: on-failure:10
     env_file: ./AriesCloudAgentCommon.env
     environment:
       - ACAPY_ENDPOINT=http://veritable-cloudagent-authority:8000

@@ -30,6 +30,28 @@ Note: The PoC application shown here, is ideal for demonstration purposes only. 
 
 ---
 
+## E2E Testing
+
+For e2e testing we are using cypress and **docker image** - `image: "cypress/included:3.2.0"` which comes with preinstalled cypress. Cypress config and tests can be found in `./doocker/` folder. Test flows or Cypress specs are located in `./docker/cypress/integration/` folder. Each spec should represent a flow e.g.
+- creating a connection with authority
+- requesting proof
+
+In order to run them locally this will require all services including **acapy** agents and **react** clients and Cypress installed.
+> Installing Cypress locally
+```sh
+npm i -g Cypress
+```
+> Running tests
+```sh
+cd docker/
+npx cypress run 
+# or
+npx cypress open
+```
+
+---
+
+
 ## System Setup
 
 The agents are differentiated by different themes. Each are built with different colour, fonts and logo-type symbols.
