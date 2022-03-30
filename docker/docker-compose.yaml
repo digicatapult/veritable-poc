@@ -99,29 +99,29 @@ services:
       - 8041:8002
     networks:
       - von
-  cloudagent-authority:
+  cloudagent-regulator:
     image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
-    container_name: veritable-cloudagent-authority
+    container_name: veritable-cloudagent-regulator
     command: 'start --inbound-transport http 0.0.0.0 8000 --inbound-transport ws 0.0.0.0 8001 --admin 0.0.0.0 8002'
     restart: on-failure:10
     env_file: ./AriesCloudAgentCommon.env
     environment:
-      - ACAPY_ENDPOINT=http://veritable-cloudagent-authority:8000
-      - ACAPY_LABEL=authority.agent
-      - ACAPY_WALLET_NAME=authority
-      - ACAPY_WALLET_KEY=authority_password
+      - ACAPY_ENDPOINT=http://veritable-cloudagent-regulator:8000
+      - ACAPY_LABEL=regulator.agent
+      - ACAPY_WALLET_NAME=regulator
+      - ACAPY_WALLET_KEY=regulator_password
       - ACAPY_WALLET_SEED=000000000000000000000000000Node2
       - ACAPY_TRACE_TAG=acapy.events
-      - ACAPY_TRACE_LABEL=authority.agent.trace
+      - ACAPY_TRACE_LABEL=regulator.agent.trace
       - ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST=true
       - ACAPY_AUTO_VERIFY_PRESENTATION=true
     ports:
       - 8051:8002
     networks:
       - von
-  react-authority:
+  react-regulator:
     image: ghcr.io/digicatapult/veritable-authority:latest
-    container_name: veritable-react-authority
+    container_name: veritable-react-regulator
     ports:
       - 3004:3000
     restart: on-failure
