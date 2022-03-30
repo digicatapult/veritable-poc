@@ -165,8 +165,8 @@ services:
 
 networks:
   von:
-    external:
       name: von_von
+      external: true
 
 volumes:
   cloudagent-data:

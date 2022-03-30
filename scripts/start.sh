@@ -4,14 +4,12 @@
 cd von-network/
 VONIMAGE=`docker images | grep von-network`
 [[ ! -z "$VONIMAGE" ]] || ./manage build
-./manage start
+./manage start --wait
 cd ../
 
-# WAIT
-echo -en "\n\nWaitingForVonWebserver"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:9000/genesis 2>&1); echo -n .; done
-
 # START F2P ARIES CLOUD AGENT
-docker-compose -f ./docker/docker-compose.yaml -p veritable-demo up --build -d
+docker compose -f ./docker/docker-compose.yaml pull 
+docker compose -f ./docker/docker-compose.yaml -p veritable-demo up --build -d
 echo -en "\n\nWaitingForIssuer"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:8021/status 2>&1); echo -n .; done
 echo -en "\n\nWaitingForHolder"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:8031/health 2>&1); echo -n .; done
 echo -en "\n\nWaitingForVerifier"; RES=""; while [[ -z "$RES" ]]; do sleep .1; RES=$(curl -sf localhost:8041/status 2>&1); echo -n .; done
