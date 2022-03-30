@@ -1,0 +1,8 @@
+{
+  "testFiles": "**/*.{spec,test}.js",
+  "integrationFolder": "cypress/integration",
+  "videoUploadOnPasses": false,
+  "requestTimeout": 10000,
+  "screenshotOnRunFailure": true,
+  "chromeWebSecurity": false
+}
