@@ -107,7 +107,7 @@ services:
     env_file: ./AriesCloudAgentCommon.env
     environment:
       - ACAPY_ENDPOINT=http://veritable-cloudagent-regulator:8000
-      - ACAPY_LABEL=regulator.agent
+      - ACAPY_LABEL=authority.agent
       - ACAPY_WALLET_NAME=regulator
       - ACAPY_WALLET_KEY=regulator_password
       - ACAPY_WALLET_SEED=000000000000000000000000000Node2
