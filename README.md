@@ -1,5 +1,9 @@
 # Veritable Four Agent SSI Demo
 
+## Deprecation Notice
+This application was deprecated on March 14th 2024, there will be no further dependency or security updates.
+---
+
 Four-agent-based proof of concept SSI system for Veritable.
 
 ## Overview
